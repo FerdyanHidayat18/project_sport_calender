@@ -5,6 +5,30 @@ import joblib
 import os
 from datetime import date, time
 
+# ── Manual Target Encoder (harus sama persis dengan pipeline) ──────────────────
+class ManualTargetEncoder:
+    def __init__(self, cols, smoothing=10):
+        self.cols = cols
+        self.smoothing = smoothing
+        self.stats_ = {}
+        self.globals_ = {}
+
+    def fit(self, X, y):
+        y_s = pd.Series(y, index=X.index)
+        for col in self.cols:
+            agg = pd.DataFrame({'y': y_s, 'col': X[col].values}).groupby('col')['y'].agg(['mean', 'count'])
+            gm  = y_s.mean()
+            agg['s'] = (agg['count'] * agg['mean'] + self.smoothing * gm) / (agg['count'] + self.smoothing)
+            self.stats_[col] = agg['s'].to_dict()
+            self.globals_[col] = gm
+        return self
+
+    def transform(self, X):
+        Xo = X.copy()
+        for col in self.cols:
+            Xo[col] = Xo[col].map(self.stats_[col]).fillna(self.globals_[col])
+        return Xo
+
 # ── Page Config ────────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Match Priority Predictor",
