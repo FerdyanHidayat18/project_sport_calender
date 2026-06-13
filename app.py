@@ -97,11 +97,26 @@ html, body, [class*="css"], .stApp {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg) !important;
     color: var(--ink) !important;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 #MainMenu, footer, header { visibility: hidden; }
-.block-container { padding-top: 0 !important; max-width: 1180px; }
+.block-container { padding-top: 0 !important; padding-bottom: 3rem !important; max-width: 1280px; }
+
+/* Force every Streamlit widget surface to white/light, regardless of theme */
+div[data-baseweb="select"] > div,
+div[data-baseweb="input"] > div,
+div[data-baseweb="base-input"],
+div[data-baseweb="popover"],
+div[data-baseweb="calendar"],
+ul[role="listbox"],
+li[role="option"],
+input, textarea {
+    background-color: #FFFFFF !important;
+    color: var(--ink) !important;
+}
+div[data-baseweb="select"] *, li[role="option"] * { color: var(--ink) !important; }
+li[role="option"]:hover, li[aria-selected="true"] { background-color: var(--red-soft) !important; }
 
 /* ── Top Navbar ───────────────────────────────────────────────────────── */
 .navbar {
@@ -110,17 +125,17 @@ html, body, [class*="css"], .stApp {
     margin-bottom: 0;
 }
 .navbar-brand {
-    display: flex; align-items: center; gap: 0.6rem;
+    display: flex; align-items: center; gap: 0.7rem;
     font-family: 'Manrope', sans-serif; font-weight: 800;
-    font-size: 1.5rem; letter-spacing: -0.5px; color: var(--ink);
+    font-size: 1.9rem; letter-spacing: -0.5px; color: var(--ink);
 }
 .navbar-brand .mark {
-    background: var(--red); color: #fff; width: 38px; height: 38px;
-    border-radius: 10px; display: flex; align-items: center; justify-content: center;
-    font-size: 1.25rem;
+    background: var(--red); color: #fff; width: 46px; height: 46px;
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
 }
 .navbar-tagline {
-    font-size: 0.75rem; color: var(--ink-soft); font-weight: 600;
+    font-size: 0.85rem; color: var(--ink-soft); font-weight: 600;
     letter-spacing: 1.5px; text-transform: uppercase;
 }
 
@@ -130,15 +145,17 @@ html, body, [class*="css"], .stApp {
 div[data-testid="stHorizontalBlock"] div[data-testid="stButton"] > button {
     font-family: 'Manrope', sans-serif !important;
     font-weight: 700 !important;
-    font-size: 1rem !important;
+    font-size: 1.1rem !important;
     letter-spacing: 0.2px !important;
     border-radius: 999px !important;
-    padding: 0.65rem 1.6rem !important;
+    padding: 0.75rem 1.8rem !important;
     border: 2px solid var(--line) !important;
-    background: var(--bg) !important;
+    background: #FFFFFF !important;
     color: var(--ink-soft) !important;
     transition: all 0.15s ease !important;
     width: 100% !important;
+    text-transform: none !important;
+    box-shadow: none !important;
 }
 div[data-testid="stHorizontalBlock"] div[data-testid="stButton"] > button:hover {
     border-color: var(--red) !important;
@@ -150,51 +167,57 @@ div[data-testid="stHorizontalBlock"] div[data-testid="stButton"] > button[kind="
     color: #fff !important;
     box-shadow: 0 4px 14px rgba(224,20,44,0.25) !important;
 }
+div[data-testid="stHorizontalBlock"] div[data-testid="stButton"] > button[kind="secondary"] {
+    background: #FFFFFF !important;
+    border-color: var(--line) !important;
+    color: var(--ink-soft) !important;
+    box-shadow: none !important;
+}
 
 /* ── Section Headings ─────────────────────────────────────────────────── */
 .section-title {
-    font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 1.3rem;
-    color: var(--ink); margin: 2rem 0 0.4rem 0; letter-spacing: -0.3px;
-    display: flex; align-items: center; gap: 0.6rem;
+    font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 1.5rem;
+    color: var(--ink); margin: 2.2rem 0 0.6rem 0; letter-spacing: -0.3px;
+    display: flex; align-items: center; gap: 0.7rem;
 }
 .section-title .dot {
-    width: 10px; height: 10px; border-radius: 50%; background: var(--red);
+    width: 12px; height: 12px; border-radius: 50%; background: var(--red);
     display: inline-block; flex-shrink: 0;
 }
 .section-sub {
-    font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 1.1rem;
-    font-weight: 400;
+    font-size: 1rem; color: var(--ink-soft); margin-bottom: 1.2rem;
+    font-weight: 400; line-height: 1.6;
 }
 
 /* ── Cards ────────────────────────────────────────────────────────────── */
 .info-card {
     background: var(--bg-grey); border: 1px solid var(--line); border-radius: 14px;
-    padding: 1rem 1.2rem; height: 100%;
+    padding: 1.1rem 1.3rem; height: 100%;
 }
 .info-card-label {
-    font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-    color: var(--ink-soft); margin-bottom: 0.35rem;
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 0.4rem;
 }
 .info-card-value {
-    font-size: 1.05rem; font-weight: 700; color: var(--ink); line-height: 1.35;
+    font-size: 1.2rem; font-weight: 700; color: var(--ink); line-height: 1.35;
 }
 
 /* ── Result Hero ──────────────────────────────────────────────────────── */
 .result-hero {
-    border-radius: 20px; padding: 2.4rem 1.8rem; text-align: center;
-    margin-bottom: 1.5rem; border: 2px solid var(--ink);
+    border-radius: 24px; padding: 3.5rem 2rem; text-align: center;
+    margin-bottom: 2rem; border: 3px solid var(--ink);
 }
 .result-hero.HIGH   { background: var(--red-soft); border-color: var(--red); }
 .result-hero.MEDIUM { background: #EAF2FF; border-color: var(--blue); }
 .result-hero.LOW    { background: #E9F8EF; border-color: var(--green); }
 
 .result-eyebrow {
-    font-size: 0.78rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--ink-soft); margin-bottom: 0.6rem;
+    font-size: 0.95rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 0.8rem;
 }
 .result-label {
-    font-family: 'Manrope', sans-serif; font-size: 4rem; font-weight: 800; line-height: 1;
-    letter-spacing: -2px; margin-bottom: 0.7rem;
+    font-family: 'Manrope', sans-serif; font-size: 6rem; font-weight: 800; line-height: 1;
+    letter-spacing: -3px; margin-bottom: 1rem;
 }
 .result-label.HIGH   { color: var(--red); }
 .result-label.MEDIUM { color: var(--blue); }
@@ -203,45 +226,45 @@ div[data-testid="stHorizontalBlock"] div[data-testid="stButton"] > button[kind="
 .confidence-pill {
     display: inline-flex; align-items: center; gap: 0.5rem;
     background: #fff; border: 2px solid var(--ink); border-radius: 999px;
-    padding: 0.5rem 1.3rem; font-size: 1.05rem; font-weight: 700; color: var(--ink);
+    padding: 0.7rem 1.6rem; font-size: 1.3rem; font-weight: 700; color: var(--ink);
 }
 
 /* ── Probability Bars ─────────────────────────────────────────────────── */
-.prob-item { margin-bottom: 1rem; }
-.prob-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.35rem; }
-.prob-name { font-size: 0.98rem; font-weight: 700; }
-.prob-pct  { font-size: 1.1rem; font-weight: 800; }
-.prob-track { height: 12px; background: var(--bg-grey); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-.prob-fill  { height: 100%; border-radius: 8px; }
+.prob-item { margin-bottom: 1.3rem; }
+.prob-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.45rem; }
+.prob-name { font-size: 1.2rem; font-weight: 700; }
+.prob-pct  { font-size: 1.35rem; font-weight: 800; }
+.prob-track { height: 16px; background: var(--bg-grey); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.prob-fill  { height: 100%; border-radius: 10px; }
 
 /* ── Team History Cards ───────────────────────────────────────────────── */
 .hist-card {
-    background: var(--bg); border: 2px solid var(--ink); border-radius: 14px;
-    padding: 1.1rem 1.3rem; height: 100%;
+    background: var(--bg); border: 2px solid var(--ink); border-radius: 16px;
+    padding: 1.4rem 1.6rem; height: 100%;
 }
 .hist-team {
-    font-family: 'Manrope', sans-serif; font-size: 1.05rem; font-weight: 800;
-    color: var(--ink); margin-bottom: 0.7rem; padding-bottom: 0.6rem;
+    font-family: 'Manrope', sans-serif; font-size: 1.3rem; font-weight: 800;
+    color: var(--ink); margin-bottom: 0.9rem; padding-bottom: 0.7rem;
     border-bottom: 2px solid var(--red);
 }
 .hist-row {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 0.35rem 0; font-size: 0.95rem;
+    padding: 0.5rem 0; font-size: 1.1rem;
 }
 .hist-key { color: var(--ink-soft); font-weight: 500; }
 .hist-val { font-weight: 800; color: var(--ink); }
 .hist-badge {
-    display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.7rem;
-    border-radius: 999px; margin-top: 0.6rem; letter-spacing: 0.5px;
+    display: inline-block; font-size: 0.85rem; font-weight: 700; padding: 0.35rem 0.9rem;
+    border-radius: 999px; margin-top: 0.8rem; letter-spacing: 0.5px;
 }
 .badge-ok   { background: #E9F8EF; color: var(--green); }
 .badge-warn { background: #FFF7E5; color: #C77700; }
 
 /* ── Summary Chips ────────────────────────────────────────────────────── */
-.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.6rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.7rem; }
 .chip {
     background: var(--bg-grey); border: 1px solid var(--line); border-radius: 999px;
-    padding: 0.4rem 1rem; font-size: 0.85rem; font-weight: 600; color: var(--ink);
+    padding: 0.55rem 1.2rem; font-size: 1rem; font-weight: 600; color: var(--ink);
     white-space: nowrap;
 }
 
@@ -249,10 +272,10 @@ div[data-testid="stHorizontalBlock"] div[data-testid="stButton"] > button[kind="
 .stat-row { display: flex; gap: 1rem; margin-bottom: 1.2rem; }
 .stat-box {
     flex: 1; background: var(--bg-grey); border: 2px solid var(--line); border-radius: 14px;
-    padding: 1.1rem 1rem; text-align: center;
+    padding: 1.3rem 1rem; text-align: center;
 }
-.stat-num { font-family: 'Manrope', sans-serif; font-size: 2rem; font-weight: 800; color: var(--ink); }
-.stat-lbl { font-size: 0.78rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 0.3rem; font-weight: 700; }
+.stat-num { font-family: 'Manrope', sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--ink); }
+.stat-lbl { font-size: 0.85rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 0.3rem; font-weight: 700; }
 .stat-num.HIGH   { color: var(--red); }
 .stat-num.MEDIUM { color: var(--blue); }
 .stat-num.LOW    { color: var(--green); }
@@ -260,32 +283,32 @@ div[data-testid="stHorizontalBlock"] div[data-testid="stButton"] > button[kind="
 /* ── Required cols chips ─────────────────────────────────────────────── */
 .required-col {
     display: inline-block; background: var(--bg-grey); border: 1px solid var(--line);
-    border-radius: 6px; padding: 0.25rem 0.6rem; font-size: 0.8rem; font-family: monospace;
-    color: var(--red-dark); margin: 0.2rem; font-weight: 600;
+    border-radius: 6px; padding: 0.3rem 0.7rem; font-size: 0.9rem; font-family: monospace;
+    color: var(--red-dark); margin: 0.25rem; font-weight: 600;
 }
 
 /* ── Result Table ─────────────────────────────────────────────────────── */
-.result-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.result-table { width: 100%; border-collapse: collapse; font-size: 1rem; }
 .result-table th {
-    background: var(--ink); color: #fff; font-weight: 700; font-size: 0.72rem;
-    letter-spacing: 1.5px; text-transform: uppercase; padding: 0.8rem 1rem; text-align: left;
+    background: var(--ink); color: #fff; font-weight: 700; font-size: 0.8rem;
+    letter-spacing: 1.5px; text-transform: uppercase; padding: 1rem 1.1rem; text-align: left;
 }
-.result-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--line); color: var(--ink); vertical-align: middle; }
+.result-table td { padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--line); color: var(--ink); vertical-align: middle; }
 .result-table tr:last-child td { border-bottom: none; }
 .result-table tr:hover td { background: var(--bg-grey); }
-.badge { display: inline-block; font-size: 0.75rem; font-weight: 800; padding: 0.3rem 0.8rem; border-radius: 999px; letter-spacing: 0.5px; }
+.badge { display: inline-block; font-size: 0.85rem; font-weight: 800; padding: 0.35rem 0.9rem; border-radius: 999px; letter-spacing: 0.5px; }
 .badge-High   { background: var(--red-soft); color: var(--red); }
 .badge-Medium { background: #EAF2FF; color: var(--blue); }
 .badge-Low    { background: #E9F8EF; color: var(--green); }
 
 /* ── Empty State ──────────────────────────────────────────────────────── */
-.empty-state { text-align: center; padding: 4rem 1rem; }
-.empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+.empty-state { text-align: center; padding: 5rem 1rem; }
+.empty-icon { font-size: 4rem; margin-bottom: 1.2rem; }
 .empty-title {
-    font-family: 'Manrope', sans-serif; font-size: 1.3rem; font-weight: 800;
-    color: var(--ink); margin-bottom: 0.5rem;
+    font-family: 'Manrope', sans-serif; font-size: 1.6rem; font-weight: 800;
+    color: var(--ink); margin-bottom: 0.6rem;
 }
-.empty-sub { font-size: 1rem; color: var(--ink-soft); line-height: 1.6; }
+.empty-sub { font-size: 1.1rem; color: var(--ink-soft); line-height: 1.7; }
 
 /* ── Form Controls ────────────────────────────────────────────────────── */
 div[data-testid="stSelectbox"] label,
@@ -294,40 +317,73 @@ div[data-testid="stTimeInput"] label,
 div[data-testid="stNumberInput"] label,
 div[data-testid="stCheckbox"] label,
 div[data-testid="stFileUploader"] label {
-    color: var(--ink) !important; font-size: 0.85rem !important;
-    font-weight: 700 !important; letter-spacing: 0.5px !important;
+    color: var(--ink) !important; font-size: 1rem !important;
+    font-weight: 700 !important; letter-spacing: 0.3px !important;
     font-family: 'Inter', sans-serif !important;
 }
 div[data-testid="stSelectbox"] > div > div {
-    background: var(--bg) !important; border: 2px solid var(--line) !important;
-    color: var(--ink) !important; border-radius: 10px !important; font-size: 1rem !important;
+    background: #FFFFFF !important; border: 2px solid var(--line) !important;
+    color: var(--ink) !important; border-radius: 10px !important; font-size: 1.1rem !important;
+    min-height: 52px !important;
 }
 div[data-testid="stSelectbox"] > div > div:focus-within {
     border-color: var(--red) !important;
 }
-div[data-testid="stDateInput"] input, div[data-testid="stTimeInput"] input, div[data-testid="stNumberInput"] input {
+div[data-testid="stDateInput"] input,
+div[data-testid="stTimeInput"] input,
+div[data-testid="stNumberInput"] input {
+    background: #FFFFFF !important;
     border: 2px solid var(--line) !important; border-radius: 10px !important;
-    font-size: 1rem !important; color: var(--ink) !important;
+    font-size: 1.1rem !important; color: var(--ink) !important;
+    min-height: 52px !important; padding: 0.4rem 0.9rem !important;
+}
+div[data-testid="stDateInput"] input:focus,
+div[data-testid="stTimeInput"] input:focus,
+div[data-testid="stNumberInput"] input:focus {
+    border-color: var(--red) !important;
+}
+div[data-testid="stNumberInput"] button {
+    background: var(--bg-grey) !important; border: 2px solid var(--line) !important; color: var(--ink) !important;
 }
 div[data-testid="stFileUploader"] > div {
     background: var(--bg-grey) !important; border: 2px dashed var(--line) !important; border-radius: 14px !important;
 }
-div[data-testid="stCheckbox"] {
-    background: var(--bg-grey); border: 2px solid var(--line); border-radius: 12px; padding: 0.7rem 1rem;
+div[data-testid="stFileUploader"] section, div[data-testid="stFileUploader"] section span, div[data-testid="stFileUploader"] section small {
+    color: var(--ink-soft) !important; font-size: 1rem !important;
 }
-div[data-testid="stCheckbox"] label p { font-size: 1rem !important; font-weight: 600 !important; }
+div[data-testid="stCheckbox"] {
+    background: var(--bg-grey); border: 2px solid var(--line); border-radius: 12px; padding: 0.85rem 1.1rem;
+}
+div[data-testid="stCheckbox"] label p { font-size: 1.05rem !important; font-weight: 600 !important; }
+
+/* Calendar / time popovers */
+div[data-baseweb="calendar"] button { color: var(--ink) !important; }
+div[data-baseweb="calendar"] { font-size: 1rem !important; }
 
 /* ── Main Predict Buttons (full width, not in horizontal block) ─────────── */
 div[data-testid="stVerticalBlock"] > div > div[data-testid="stButton"] > button {
     background: var(--red) !important;
-    color: #fff !important; font-family: 'Manrope', sans-serif !important; font-size: 1.05rem !important;
+    color: #fff !important; font-family: 'Manrope', sans-serif !important; font-size: 1.2rem !important;
     font-weight: 800 !important; letter-spacing: 1.5px !important; text-transform: uppercase !important;
-    border: none !important; border-radius: 12px !important; padding: 0.95rem 2rem !important;
+    border: none !important; border-radius: 12px !important; padding: 1.1rem 2rem !important;
     width: 100% !important; box-shadow: 0 6px 18px rgba(224,20,44,0.28) !important;
     transition: transform 0.1s ease, opacity 0.15s ease !important;
 }
 div[data-testid="stVerticalBlock"] > div > div[data-testid="stButton"] > button:hover {
     opacity: 0.92 !important; transform: translateY(-1px) !important;
+}
+
+/* ── Back / reset button ──────────────────────────────────────────────── */
+.back-btn-wrap div[data-testid="stButton"] > button {
+    background: #FFFFFF !important;
+    color: var(--ink) !important; font-family: 'Manrope', sans-serif !important; font-size: 1.05rem !important;
+    font-weight: 700 !important; letter-spacing: 0.5px !important; text-transform: none !important;
+    border: 2px solid var(--ink) !important; border-radius: 999px !important; padding: 0.8rem 1.8rem !important;
+    width: auto !important; box-shadow: none !important;
+}
+.back-btn-wrap div[data-testid="stButton"] > button:hover {
+    background: var(--ink) !important; color: #fff !important;
+    opacity: 1 !important; transform: none !important;
 }
 
 /* ── Divider ──────────────────────────────────────────────────────────── */
@@ -473,9 +529,73 @@ st.markdown("<hr>", unsafe_allow_html=True)
 # ══════════════════════════════════════════════════════════════════════════════
 if st.session_state.active_tab == 'single':
 
-    col_left, col_right = st.columns([5, 4], gap="large")
+    if 'single_result' not in st.session_state:
+        st.session_state.single_result = None
 
-    with col_left:
+    # ── RESULT VIEW (full width) ────────────────────────────────────────────
+    if st.session_state.single_result is not None:
+        r = st.session_state.single_result
+        label, ph, pm, pl = r['label'], r['ph'], r['pm'], r['pl']
+        conf = max(ph, pm, pl) * 100
+
+        st.markdown('<div class="back-btn-wrap">', unsafe_allow_html=True)
+        if st.button("← Prediksi Lagi", key="back_btn"):
+            st.session_state.single_result = None
+            st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
+
+        st.markdown(f"""
+        <div class="result-hero {label.upper()}">
+            <div class="result-eyebrow">Match Priority Level</div>
+            <div class="result-label {label.upper()}">{label}</div>
+            <div class="confidence-pill">Confidence&nbsp;&nbsp;<strong>{conf:.1f}%</strong></div>
+        </div>""", unsafe_allow_html=True)
+
+        res_c1, res_c2 = st.columns([1, 1], gap="large")
+
+        with res_c1:
+            st.markdown('<div class="section-title"><span class="dot"></span>Probabilitas</div>', unsafe_allow_html=True)
+            color_map = {'High':'var(--red)','Medium':'var(--blue)','Low':'var(--green)'}
+            for lbl, prob in [('High',ph),('Medium',pm),('Low',pl)]:
+                pct = prob*100
+                color = color_map[lbl]
+                st.markdown(f"""<div class="prob-item">
+                    <div class="prob-header">
+                        <span class="prob-name" style="color:{color}">{lbl}</span>
+                        <span class="prob-pct" style="color:{color}">{pct:.1f}%</span>
+                    </div>
+                    <div class="prob-track"><div class="prob-fill" style="width:{pct}%;background:{color};"></div></div>
+                </div>""", unsafe_allow_html=True)
+
+            st.markdown('<div class="section-title"><span class="dot"></span>Summary</div>', unsafe_allow_html=True)
+            st.markdown(f"""<div class="chips">
+                <span class="chip">{r['tournament']}</span>
+                <span class="chip">{r['home']} vs {r['away']}</span>
+                <span class="chip">{r['channel']}</span>
+                <span class="chip">{r['date']} · {r['time']}</span>
+                <span class="chip">{r['duration']} menit</span>
+                <span class="chip">{"Exclusive" if r['exclusive'] else "Open"}</span>
+                <span class="chip">{"Login Gating" if r['login_gating'] else "Akses Bebas"}</span>
+            </div>""", unsafe_allow_html=True)
+
+        with res_c2:
+            st.markdown('<div class="section-title"><span class="dot"></span>Historis Tim</div>', unsafe_allow_html=True)
+            hc1, hc2 = st.columns(2)
+            for col_h, team, p, w, n in [
+                (hc1, r['home'], r['home_p'], r['home_w'], r['hn']),
+                (hc2, r['away'], r['away_p'], r['away_w'], r['an']),
+            ]:
+                bc = "badge-ok" if n>=3 else "badge-warn"
+                bt = f"{n} matches tersedia" if n>=3 else f"Data terbatas — {n} matches"
+                col_h.markdown(f"""<div class="hist-card">
+                    <div class="hist-team">{team}</div>
+                    <div class="hist-row"><span class="hist-key">Avg Plays</span><span class="hist-val">{fmt(p)}</span></div>
+                    <div class="hist-row"><span class="hist-key">Avg Watchers</span><span class="hist-val">{fmt(w)}</span></div>
+                    <span class="hist-badge {bc}">{bt}</span>
+                </div>""", unsafe_allow_html=True)
+
+    # ── FORM VIEW ────────────────────────────────────────────────────────────
+    else:
         st.markdown('<div class="section-title"><span class="dot"></span>Tournament</div>', unsafe_allow_html=True)
         tournament_list     = sorted(tournaments_df['tournament_title'].dropna().tolist())
         selected_tournament = st.selectbox("Pilih Tournament", tournament_list, index=0, label_visibility="collapsed")
@@ -520,7 +640,6 @@ if st.session_state.active_tab == 'single':
         st.markdown("<br>", unsafe_allow_html=True)
         predict_btn = st.button("Predict Priority")
 
-    with col_right:
         if predict_btn:
             with st.spinner(""):
                 match_dt = datetime.datetime.combine(match_date, match_time_val)
@@ -532,56 +651,16 @@ if st.session_state.active_tab == 'single':
                     match_exclusive, match_login_gating, match_drm, duration
                 )
                 label, ph, pm, pl, proba_arr = predict_one(row_data)
-                conf = max(ph, pm, pl) * 100
 
-            st.markdown(f"""
-            <div class="result-hero {label.upper()}">
-                <div class="result-eyebrow">Match Priority Level</div>
-                <div class="result-label {label.upper()}">{label}</div>
-                <div class="confidence-pill">Confidence&nbsp;&nbsp;<strong>{conf:.1f}%</strong></div>
-            </div>""", unsafe_allow_html=True)
-
-            st.markdown('<div class="section-title"><span class="dot"></span>Probabilitas</div>', unsafe_allow_html=True)
-            color_map = {'High':'var(--red)','Medium':'var(--blue)','Low':'var(--green)'}
-            for lbl, prob in [('High',ph),('Medium',pm),('Low',pl)]:
-                pct = prob*100
-                color = color_map[lbl]
-                st.markdown(f"""<div class="prob-item">
-                    <div class="prob-header">
-                        <span class="prob-name" style="color:{color}">{lbl}</span>
-                        <span class="prob-pct" style="color:{color}">{pct:.1f}%</span>
-                    </div>
-                    <div class="prob-track"><div class="prob-fill" style="width:{pct}%;background:{color};"></div></div>
-                </div>""", unsafe_allow_html=True)
-
-            st.markdown('<div class="section-title"><span class="dot"></span>Historis Tim</div>', unsafe_allow_html=True)
-            hc1, hc2 = st.columns(2)
-            for col_h, team, p, w, n in [(hc1,selected_home,home_p,home_w,hn),(hc2,selected_away,away_p,away_w,an)]:
-                bc = "badge-ok" if n>=3 else "badge-warn"
-                bt = f"{n} matches tersedia" if n>=3 else f"Data terbatas — {n} matches"
-                col_h.markdown(f"""<div class="hist-card">
-                    <div class="hist-team">{team}</div>
-                    <div class="hist-row"><span class="hist-key">Avg Plays</span><span class="hist-val">{fmt(p)}</span></div>
-                    <div class="hist-row"><span class="hist-key">Avg Watchers</span><span class="hist-val">{fmt(w)}</span></div>
-                    <span class="hist-badge {bc}">{bt}</span>
-                </div>""", unsafe_allow_html=True)
-
-            st.markdown('<div class="section-title"><span class="dot"></span>Summary</div>', unsafe_allow_html=True)
-            st.markdown(f"""<div class="chips">
-                <span class="chip">{selected_tournament}</span>
-                <span class="chip">{selected_home} vs {selected_away}</span>
-                <span class="chip">{selected_channel}</span>
-                <span class="chip">{match_date} · {match_time_val.strftime('%H:%M')}</span>
-                <span class="chip">{duration} menit</span>
-                <span class="chip">{"Exclusive" if match_exclusive else "Open"}</span>
-                <span class="chip">{"Login Gating" if match_login_gating else "Akses Bebas"}</span>
-            </div>""", unsafe_allow_html=True)
-        else:
-            st.markdown("""<div class="empty-state">
-                <div class="empty-icon">⚽</div>
-                <div class="empty-title">Siap Memprediksi</div>
-                <div class="empty-sub">Lengkapi form di sebelah kiri, lalu klik<br><strong>Predict Priority</strong> untuk melihat hasilnya.</div>
-            </div>""", unsafe_allow_html=True)
+            st.session_state.single_result = {
+                'label': label, 'ph': ph, 'pm': pm, 'pl': pl,
+                'tournament': selected_tournament, 'home': selected_home, 'away': selected_away,
+                'channel': selected_channel, 'date': str(match_date), 'time': match_time_val.strftime('%H:%M'),
+                'duration': duration, 'exclusive': match_exclusive, 'login_gating': match_login_gating,
+                'home_p': home_p, 'home_w': home_w, 'away_p': away_p, 'away_w': away_w,
+                'hn': hn, 'an': an,
+            }
+            st.rerun()
 
 
 # ══════════════════════════════════════════════════════════════════════════════
