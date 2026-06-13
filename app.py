@@ -72,219 +72,272 @@ class ManualPreprocessor:
 # ── Page Config ────────────────────────────────────────────────────────────────
 st.set_page_config(page_title="Match Priority Predictor", page_icon="⚽", layout="wide")
 
-# ── Theme (matchday / scoreboard) ────────────────────────────────────────────
+# ── Global Styles (Clean White & Red) ──────────────────────────────────────────
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-    --bg:#f6f4ee; --bg2:#ffffff; --bg3:#efece2; --border:#e3ddcf; --border2:#cfc7b4;
-    --ink:#0f1d18; --text:#1a2420; --text2:#5d6a63; --text3:#9aa39c;
-    --accent:#2fae66; --accent-deep:#1f7a48; --accent-soft:#e3f4ea;
-    --high:#e3543f; --med:#3a7bd5; --low:#2fae66;
-    --shadow:0 18px 44px rgba(15,29,24,0.10); --shadow2:0 2px 8px rgba(15,29,24,0.05);
+    --red:        #E0142C;
+    --red-dark:   #B30E22;
+    --red-soft:   #FFEDEF;
+    --red-tint:   #FFF5F6;
+    --ink:        #1A1A1E;
+    --ink-soft:   #5C5C66;
+    --line:       #EBEBEF;
+    --bg:         #FFFFFF;
+    --bg-grey:    #FAFAFC;
+    --green:      #1A9E5C;
+    --blue:       #1B6FE0;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
+
 html, body, [class*="css"], .stApp {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg) !important;
-    color: var(--text) !important;
-    font-size: 17px;
+    color: var(--ink) !important;
+    font-size: 16px;
 }
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg2); }
-::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 
-.main .block-container { max-width: 960px; padding-top: 0 !important; padding-bottom: 3rem !important; }
-#MainMenu, footer, header { visibility:hidden; }
+#MainMenu, footer, header { visibility: hidden; }
+.block-container { padding-top: 0 !important; max-width: 1180px; }
 
-/* ── Header band ───────────────────────────────────────────────────────── */
-.app-band {
-    background:var(--ink); color:#fff; margin:0 -2rem 2rem -2rem; padding:2.2rem 2rem 1.6rem 2rem;
-    border-radius:0 0 24px 24px; position:relative; overflow:hidden;
+/* ── Top Navbar ───────────────────────────────────────────────────────── */
+.navbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 0; border-bottom: 2px solid var(--ink);
+    margin-bottom: 0;
 }
-.app-band::after {
-    content:''; position:absolute; right:-60px; top:-60px; width:220px; height:220px;
-    border-radius:50%; border:2px solid rgba(255,255,255,0.06); pointer-events:none;
+.navbar-brand {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: 'Manrope', sans-serif; font-weight: 800;
+    font-size: 1.5rem; letter-spacing: -0.5px; color: var(--ink);
 }
-.app-band::before {
-    content:''; position:absolute; right:20px; top:40px; width:120px; height:120px;
-    border-radius:50%; border:2px solid rgba(47,174,102,0.25); pointer-events:none;
+.navbar-brand .mark {
+    background: var(--red); color: #fff; width: 38px; height: 38px;
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem;
 }
-.app-kicker { font-family:'JetBrains Mono',monospace; font-size:0.78rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:0.5rem; }
-.app-title { font-family:'Space Grotesk',sans-serif; font-size:2.6rem; font-weight:700; letter-spacing:-1px; line-height:1.05; color:#fff; }
-.app-title span { color:var(--accent); }
-.app-sub { font-size:0.95rem; color:#aab5af; font-weight:500; margin-top:0.4rem; }
-
-/* ── Tabs ──────────────────────────────────────────────────────────────── */
-div[data-testid="column"]:has(button[kind]) { padding:0 !important; }
-.stButton > button {
-    font-family:'Inter',sans-serif !important; font-size:1.02rem !important;
-    font-weight:600 !important; letter-spacing:0 !important; text-transform:none !important;
-    border-radius:12px !important; padding:0.85rem 1.8rem !important;
-    width:100% !important; box-shadow:none !important;
-    transition:all 0.15s !important;
+.navbar-tagline {
+    font-size: 0.75rem; color: var(--ink-soft); font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase;
 }
-button[kind="secondary"] {
-    background:var(--bg2) !important; color:var(--text2) !important; border:1px solid var(--border) !important;
+
+/* ── Nav Tabs ─────────────────────────────────────────────────────────── */
+.nav-row { display: flex; gap: 0.5rem; padding: 1.1rem 0; }
+
+div[data-testid="stHorizontalBlock"] div[data-testid="stButton"] > button {
+    font-family: 'Manrope', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    letter-spacing: 0.2px !important;
+    border-radius: 999px !important;
+    padding: 0.65rem 1.6rem !important;
+    border: 2px solid var(--line) !important;
+    background: var(--bg) !important;
+    color: var(--ink-soft) !important;
+    transition: all 0.15s ease !important;
+    width: 100% !important;
 }
-button[kind="secondary"]:hover { border-color:var(--accent) !important; color:var(--accent-deep) !important; }
-button[kind="primary"] {
-    background:var(--ink) !important; color:#fff !important; border:none !important;
-    box-shadow:0 8px 22px rgba(15,29,24,0.22) !important;
+div[data-testid="stHorizontalBlock"] div[data-testid="stButton"] > button:hover {
+    border-color: var(--red) !important;
+    color: var(--red) !important;
 }
-button[kind="primary"]:hover { background:var(--accent-deep) !important; color:#fff !important; }
-
-/* ── Section panels ────────────────────────────────────────────────────── */
-.group-title {
-    font-family:'Space Grotesk',sans-serif; font-size:1.2rem; font-weight:700; color:var(--text);
-    margin:0 0 1.1rem 0; display:flex; align-items:center; gap:0.6rem;
+div[data-testid="stHorizontalBlock"] div[data-testid="stButton"] > button[kind="primary"] {
+    background: var(--red) !important;
+    border-color: var(--red) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 14px rgba(224,20,44,0.25) !important;
 }
-.group-num {
-    font-family:'JetBrains Mono',monospace; font-size:0.85rem; font-weight:700; color:#fff;
-    background:var(--accent); border-radius:7px; width:1.8rem; height:1.8rem;
-    display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
+
+/* ── Section Headings ─────────────────────────────────────────────────── */
+.section-title {
+    font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 1.3rem;
+    color: var(--ink); margin: 2rem 0 0.4rem 0; letter-spacing: -0.3px;
+    display: flex; align-items: center; gap: 0.6rem;
 }
-div[data-testid="stVerticalBlockBorderWrapper"] {
-    background:var(--bg2); border:1px solid var(--border) !important; border-left:4px solid var(--accent) !important;
-    border-radius:14px !important; box-shadow:var(--shadow2);
+.section-title .dot {
+    width: 10px; height: 10px; border-radius: 50%; background: var(--red);
+    display: inline-block; flex-shrink: 0;
 }
-div[data-testid="stVerticalBlockBorderWrapper"] > div { padding:1.6rem 1.8rem; }
-
-.card { background:var(--bg3); border-radius:12px; padding:1rem 1.2rem; margin-bottom:0.6rem; }
-.card-label { font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--text3); margin-bottom:0.4rem; }
-.card-value { font-size:1.05rem; font-weight:700; color:var(--text); line-height:1.4; }
-
-/* ── History cards ─────────────────────────────────────────────────────── */
-.hist-card { background:var(--bg3); border-radius:12px; padding:1.2rem 1.4rem; }
-.hist-team { font-family:'Space Grotesk',sans-serif; font-size:1.1rem; font-weight:700; color:var(--text); margin-bottom:0.7rem; }
-.hist-row { display:flex; justify-content:space-between; align-items:center; padding:0.35rem 0; border-bottom:1px solid var(--border); }
-.hist-row:last-of-type { border-bottom:none; }
-.hist-key { font-size:0.92rem; color:var(--text2); }
-.hist-val { font-family:'JetBrains Mono',monospace; font-size:1rem; font-weight:700; color:var(--text); }
-.hist-badge { display:inline-block; font-family:'JetBrains Mono',monospace; font-size:0.75rem; font-weight:700; padding:0.25rem 0.7rem; border-radius:6px; margin-top:0.7rem; }
-.badge-ok { background:var(--accent-soft); color:var(--accent-deep); }
-.badge-warn { background:#fbeede; color:#b87213; }
-
-/* ── Result hero — scoreboard ticket ──────────────────────────────────── */
-.result-wrap {
-    border-radius:18px; background:var(--ink); color:#fff;
-    box-shadow:var(--shadow); margin-bottom:1.6rem; position:relative; overflow:hidden;
-    display:flex; align-items:stretch;
+.section-sub {
+    font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 1.1rem;
+    font-weight: 400;
 }
-.result-left {
-    flex:0 0 42%; padding:2.4rem 2rem; display:flex; flex-direction:column; justify-content:center;
-    border-right:2px dashed rgba(255,255,255,0.14); position:relative;
+
+/* ── Cards ────────────────────────────────────────────────────────────── */
+.info-card {
+    background: var(--bg-grey); border: 1px solid var(--line); border-radius: 14px;
+    padding: 1rem 1.2rem; height: 100%;
 }
-.result-left::before, .result-left::after {
-    content:''; position:absolute; right:-12px; width:24px; height:24px; background:var(--bg);
-    border-radius:50%;
+.info-card-label {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 0.35rem;
 }
-.result-left::before { top:-12px; }
-.result-left::after { bottom:-12px; }
-.result-right { flex:1; padding:2.4rem 2.2rem; display:flex; flex-direction:column; justify-content:center; gap:1rem; }
-.result-eyebrow { font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#9fb6ab; margin-bottom:0.6rem; }
-.result-label { font-family:'Space Grotesk',sans-serif; font-size:3.4rem; font-weight:700; line-height:1; letter-spacing:-1px; margin-bottom:0.7rem; }
-.color-HIGH { color:var(--high); } .color-MEDIUM { color:#7fb1ff; } .color-LOW { color:var(--accent); }
-.confidence-pill { display:inline-flex; align-items:center; gap:0.5rem; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14); border-radius:24px; padding:0.5rem 1.1rem; font-size:0.92rem; color:#dfe7e3; font-weight:600; width:fit-content; }
-.confidence-pill strong { font-family:'JetBrains Mono',monospace; color:#fff; }
+.info-card-value {
+    font-size: 1.05rem; font-weight: 700; color: var(--ink); line-height: 1.35;
+}
 
-/* ── Probability bars ──────────────────────────────────────────────────── */
-.prob-item { margin-bottom:0; }
-.prob-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem; }
-.prob-name { font-size:0.95rem; font-weight:600; color:#dfe7e3; }
-.prob-pct { font-family:'JetBrains Mono',monospace; font-size:0.95rem; font-weight:700; color:#fff; }
-.prob-track { height:8px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden; }
-.prob-fill { height:100%; border-radius:4px; }
+/* ── Result Hero ──────────────────────────────────────────────────────── */
+.result-hero {
+    border-radius: 20px; padding: 2.4rem 1.8rem; text-align: center;
+    margin-bottom: 1.5rem; border: 2px solid var(--ink);
+}
+.result-hero.HIGH   { background: var(--red-soft); border-color: var(--red); }
+.result-hero.MEDIUM { background: #EAF2FF; border-color: var(--blue); }
+.result-hero.LOW    { background: #E9F8EF; border-color: var(--green); }
 
-/* ── Summary chips ─────────────────────────────────────────────────────── */
-.chips { display:flex; flex-wrap:wrap; gap:0.55rem; margin-top:0.7rem; }
-.chip { background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:0.5rem 1rem; font-size:0.9rem; color:var(--text2); font-weight:600; }
+.result-eyebrow {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 0.6rem;
+}
+.result-label {
+    font-family: 'Manrope', sans-serif; font-size: 4rem; font-weight: 800; line-height: 1;
+    letter-spacing: -2px; margin-bottom: 0.7rem;
+}
+.result-label.HIGH   { color: var(--red); }
+.result-label.MEDIUM { color: var(--blue); }
+.result-label.LOW    { color: var(--green); }
 
-/* ── Bulk section ──────────────────────────────────────────────────────── */
-.bulk-info-title { font-family:'Space Grotesk',sans-serif; font-size:1.05rem; font-weight:700; color:var(--text); margin-bottom:0.6rem; }
-.bulk-info-text { font-size:0.95rem; color:var(--text2); line-height:1.7; }
-.required-col { display:inline-block; background:var(--bg3); border-radius:6px; padding:0.25rem 0.65rem; font-size:0.82rem; font-family:'JetBrains Mono',monospace; color:var(--text2); margin:0.18rem; }
+.confidence-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: #fff; border: 2px solid var(--ink); border-radius: 999px;
+    padding: 0.5rem 1.3rem; font-size: 1.05rem; font-weight: 700; color: var(--ink);
+}
 
-/* ── Result table ──────────────────────────────────────────────────────── */
-.result-table { width:100%; border-collapse:collapse; font-size:0.95rem; }
-.result-table th { background:var(--bg3); color:var(--text2); font-weight:700; font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; font-family:'JetBrains Mono',monospace; padding:0.8rem 1rem; text-align:left; }
-.result-table td { padding:0.75rem 1rem; border-bottom:1px solid var(--border); color:var(--text); vertical-align:middle; }
-.result-table tr:last-child td { border-bottom:none; }
-.result-table tr:hover td { background:var(--bg3); }
-.badge { display:inline-block; font-family:'JetBrains Mono',monospace; font-size:0.78rem; font-weight:700; padding:0.3rem 0.75rem; border-radius:6px; }
-.badge-HIGH { background:#fbe5e1; color:var(--high); }
-.badge-MEDIUM { background:#e3edfb; color:var(--med); }
-.badge-LOW { background:var(--accent-soft); color:var(--accent-deep); }
+/* ── Probability Bars ─────────────────────────────────────────────────── */
+.prob-item { margin-bottom: 1rem; }
+.prob-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.35rem; }
+.prob-name { font-size: 0.98rem; font-weight: 700; }
+.prob-pct  { font-size: 1.1rem; font-weight: 800; }
+.prob-track { height: 12px; background: var(--bg-grey); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.prob-fill  { height: 100%; border-radius: 8px; }
 
-/* ── Stat row ──────────────────────────────────────────────────────────── */
-.stat-row { display:flex; gap:1rem; margin-bottom:1.4rem; }
-.stat-box { flex:1; background:var(--bg3); border-radius:12px; padding:1.2rem; text-align:center; }
-.stat-num { font-family:'Space Grotesk',sans-serif; font-size:2.1rem; font-weight:700; }
-.stat-lbl { font-family:'JetBrains Mono',monospace; font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; color:var(--text3); margin-top:0.3rem; font-weight:600; }
+/* ── Team History Cards ───────────────────────────────────────────────── */
+.hist-card {
+    background: var(--bg); border: 2px solid var(--ink); border-radius: 14px;
+    padding: 1.1rem 1.3rem; height: 100%;
+}
+.hist-team {
+    font-family: 'Manrope', sans-serif; font-size: 1.05rem; font-weight: 800;
+    color: var(--ink); margin-bottom: 0.7rem; padding-bottom: 0.6rem;
+    border-bottom: 2px solid var(--red);
+}
+.hist-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.35rem 0; font-size: 0.95rem;
+}
+.hist-key { color: var(--ink-soft); font-weight: 500; }
+.hist-val { font-weight: 800; color: var(--ink); }
+.hist-badge {
+    display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.7rem;
+    border-radius: 999px; margin-top: 0.6rem; letter-spacing: 0.5px;
+}
+.badge-ok   { background: #E9F8EF; color: var(--green); }
+.badge-warn { background: #FFF7E5; color: #C77700; }
 
-/* ── Input widgets ─────────────────────────────────────────────────────── */
+/* ── Summary Chips ────────────────────────────────────────────────────── */
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.6rem; }
+.chip {
+    background: var(--bg-grey); border: 1px solid var(--line); border-radius: 999px;
+    padding: 0.4rem 1rem; font-size: 0.85rem; font-weight: 600; color: var(--ink);
+    white-space: nowrap;
+}
+
+/* ── Bulk: stat boxes ─────────────────────────────────────────────────── */
+.stat-row { display: flex; gap: 1rem; margin-bottom: 1.2rem; }
+.stat-box {
+    flex: 1; background: var(--bg-grey); border: 2px solid var(--line); border-radius: 14px;
+    padding: 1.1rem 1rem; text-align: center;
+}
+.stat-num { font-family: 'Manrope', sans-serif; font-size: 2rem; font-weight: 800; color: var(--ink); }
+.stat-lbl { font-size: 0.78rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 0.3rem; font-weight: 700; }
+.stat-num.HIGH   { color: var(--red); }
+.stat-num.MEDIUM { color: var(--blue); }
+.stat-num.LOW    { color: var(--green); }
+
+/* ── Required cols chips ─────────────────────────────────────────────── */
+.required-col {
+    display: inline-block; background: var(--bg-grey); border: 1px solid var(--line);
+    border-radius: 6px; padding: 0.25rem 0.6rem; font-size: 0.8rem; font-family: monospace;
+    color: var(--red-dark); margin: 0.2rem; font-weight: 600;
+}
+
+/* ── Result Table ─────────────────────────────────────────────────────── */
+.result-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.result-table th {
+    background: var(--ink); color: #fff; font-weight: 700; font-size: 0.72rem;
+    letter-spacing: 1.5px; text-transform: uppercase; padding: 0.8rem 1rem; text-align: left;
+}
+.result-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--line); color: var(--ink); vertical-align: middle; }
+.result-table tr:last-child td { border-bottom: none; }
+.result-table tr:hover td { background: var(--bg-grey); }
+.badge { display: inline-block; font-size: 0.75rem; font-weight: 800; padding: 0.3rem 0.8rem; border-radius: 999px; letter-spacing: 0.5px; }
+.badge-High   { background: var(--red-soft); color: var(--red); }
+.badge-Medium { background: #EAF2FF; color: var(--blue); }
+.badge-Low    { background: #E9F8EF; color: var(--green); }
+
+/* ── Empty State ──────────────────────────────────────────────────────── */
+.empty-state { text-align: center; padding: 4rem 1rem; }
+.empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+.empty-title {
+    font-family: 'Manrope', sans-serif; font-size: 1.3rem; font-weight: 800;
+    color: var(--ink); margin-bottom: 0.5rem;
+}
+.empty-sub { font-size: 1rem; color: var(--ink-soft); line-height: 1.6; }
+
+/* ── Form Controls ────────────────────────────────────────────────────── */
 div[data-testid="stSelectbox"] label,
 div[data-testid="stDateInput"] label,
 div[data-testid="stTimeInput"] label,
 div[data-testid="stNumberInput"] label,
 div[data-testid="stCheckbox"] label,
 div[data-testid="stFileUploader"] label {
-    color:var(--text2) !important; font-size:1rem !important;
-    font-weight:700 !important; letter-spacing:0.2px !important;
-    text-transform:none !important; font-family:'Inter',sans-serif !important;
-    margin-bottom:0.3rem !important;
+    color: var(--ink) !important; font-size: 0.85rem !important;
+    font-weight: 700 !important; letter-spacing: 0.5px !important;
+    font-family: 'Inter', sans-serif !important;
 }
-div[data-testid="stSelectbox"] > div,
-div[data-testid="stDateInput"] input,
-div[data-testid="stTimeInput"] input,
-div[data-testid="stNumberInput"] input,
-div[data-testid="stFileUploader"] section {
-    background:var(--bg2) !important;
-    border-color:var(--border) !important;
-    color:var(--text) !important;
-    border-radius:10px !important;
-    font-size:1.1rem !important;
+div[data-testid="stSelectbox"] > div > div {
+    background: var(--bg) !important; border: 2px solid var(--line) !important;
+    color: var(--ink) !important; border-radius: 10px !important; font-size: 1rem !important;
 }
-div[data-testid="stSelectbox"] > div { min-height:3.1rem !important; }
-div[data-testid="stSelectbox"] div[data-baseweb="select"] span { font-size:1.1rem !important; color:var(--text) !important; }
-div[data-testid="stDateInput"] input,
-div[data-testid="stTimeInput"] input,
-div[data-testid="stNumberInput"] input { padding:0.75rem 0.9rem !important; font-family:'JetBrains Mono',monospace !important; }
-div[data-testid="stNumberInput"] button { background:var(--bg3) !important; color:var(--text) !important; border-color:var(--border) !important; }
-div[data-testid="stFileUploader"] > div { background:var(--bg2) !important; border-color:var(--border) !important; border-radius:12px !important; padding:1.2rem !important; }
-div[data-testid="stFileUploader"] section span,
-div[data-testid="stFileUploader"] section small { color:var(--text2) !important; font-size:1rem !important; }
-div[data-testid="stCheckbox"] { background:var(--bg3); border-radius:10px; padding:0.8rem 1rem; }
-div[data-testid="stCheckbox"] label p { color:var(--text) !important; font-size:1.05rem !important; text-transform:none !important; letter-spacing:normal !important; font-weight:600 !important; }
-
-/* ── Back link button ──────────────────────────────────────────────────── */
-.back-btn .stButton > button {
-    background:transparent !important; color:var(--text2) !important;
-    border:none !important; box-shadow:none !important;
-    width:auto !important; padding:0.4rem 0 !important; font-size:1rem !important; font-weight:600 !important;
+div[data-testid="stSelectbox"] > div > div:focus-within {
+    border-color: var(--red) !important;
 }
-.back-btn .stButton > button:hover { color:var(--accent-deep) !important; }
-
-/* ── Download / upload browse buttons ─────────────────────────────────── */
-.stDownloadButton > button,
-div[data-testid="stFileUploader"] section button {
-    background:var(--bg2) !important; color:var(--text) !important;
-    border:1px solid var(--border2) !important; box-shadow:none !important;
-    font-family:'Inter',sans-serif !important; font-weight:700 !important;
-    letter-spacing:0 !important; text-transform:none !important;
-    width:auto !important; font-size:0.95rem !important; padding:0.7rem 1.4rem !important;
+div[data-testid="stDateInput"] input, div[data-testid="stTimeInput"] input, div[data-testid="stNumberInput"] input {
+    border: 2px solid var(--line) !important; border-radius: 10px !important;
+    font-size: 1rem !important; color: var(--ink) !important;
 }
-.stDownloadButton > button:hover,
-div[data-testid="stFileUploader"] section button:hover { border-color:var(--accent) !important; color:var(--accent-deep) !important; }
+div[data-testid="stFileUploader"] > div {
+    background: var(--bg-grey) !important; border: 2px dashed var(--line) !important; border-radius: 14px !important;
+}
+div[data-testid="stCheckbox"] {
+    background: var(--bg-grey); border: 2px solid var(--line); border-radius: 12px; padding: 0.7rem 1rem;
+}
+div[data-testid="stCheckbox"] label p { font-size: 1rem !important; font-weight: 600 !important; }
 
-.stMarkdown p, .stMarkdown li { font-size:1rem; }
+/* ── Main Predict Buttons (full width, not in horizontal block) ─────────── */
+div[data-testid="stVerticalBlock"] > div > div[data-testid="stButton"] > button {
+    background: var(--red) !important;
+    color: #fff !important; font-family: 'Manrope', sans-serif !important; font-size: 1.05rem !important;
+    font-weight: 800 !important; letter-spacing: 1.5px !important; text-transform: uppercase !important;
+    border: none !important; border-radius: 12px !important; padding: 0.95rem 2rem !important;
+    width: 100% !important; box-shadow: 0 6px 18px rgba(224,20,44,0.28) !important;
+    transition: transform 0.1s ease, opacity 0.15s ease !important;
+}
+div[data-testid="stVerticalBlock"] > div > div[data-testid="stButton"] > button:hover {
+    opacity: 0.92 !important; transform: translateY(-1px) !important;
+}
 
-@media (max-width: 768px) {
-    .result-wrap { flex-direction:column; }
-    .result-left { flex:none; border-right:none; border-bottom:2px dashed rgba(255,255,255,0.14); }
-    .result-left::before, .result-left::after { display:none; }
+/* ── Divider ──────────────────────────────────────────────────────────── */
+hr { border: none; border-top: 1px solid var(--line); margin: 1.5rem 0; }
+
+/* ── Alert ────────────────────────────────────────────────────────────── */
+.alert-banner {
+    background: var(--red-tint); border: 2px solid var(--red); border-radius: 12px;
+    padding: 0.9rem 1.2rem; font-size: 0.95rem; font-weight: 600; color: var(--red-dark);
+    margin-bottom: 1rem;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -389,227 +442,87 @@ def build_features(team_home, team_away, match_dt, tournament, channel,
         'match_organization':      str(organization)  if pd.notna(organization)  else 'Unknown',
     }, hn, an, home_p, home_w, away_p, away_w
 
-# ── App State ──────────────────────────────────────────────────────────────────
-if 'active_tab' not in st.session_state:
-    st.session_state.active_tab = 'single'          # 'single' | 'bulk'
-if 'view' not in st.session_state:
-    st.session_state.view = 'form'                   # 'form' | 'result'
-if 'single_result' not in st.session_state:
-    st.session_state.single_result = None
-if 'bulk_result' not in st.session_state:
-    st.session_state.bulk_result = None
-if 'bulk_res_df' not in st.session_state:
-    st.session_state.bulk_res_df = None
-
-# ── Header ─────────────────────────────────────────────────────────────────────
+# ── Navbar ─────────────────────────────────────────────────────────────────────
 st.markdown("""
-<div class="app-band">
-    <div class="app-kicker">⚽ Sport Calendar · BUSPRO</div>
-    <div class="app-title">Match <span>Priority</span></div>
-    <div class="app-sub">Prediksi level prioritas siaran berdasarkan jadwal, tim, dan historis performa.</div>
+<div class="navbar">
+    <div class="navbar-brand"><span class="mark">⚽</span> Match Priority</div>
+    <div class="navbar-tagline">Sport Calendar · Prediction Tool</div>
 </div>
 """, unsafe_allow_html=True)
 
-# ── Tab Navigation (only on form view) ───────────────────────────────────────
-if st.session_state.view == 'form':
-    tab_c1, tab_c2 = st.columns(2)
-    with tab_c1:
-        if st.button("⚡ Single Predict", key="tab_single",
-                     type="primary" if st.session_state.active_tab=='single' else "secondary"):
-            st.session_state.active_tab = 'single'
-            st.rerun()
-    with tab_c2:
-        if st.button("📂 Bulk Upload CSV", key="tab_bulk",
-                     type="primary" if st.session_state.active_tab=='bulk' else "secondary"):
-            st.session_state.active_tab = 'bulk'
-            st.rerun()
-    st.markdown("<div style='height:1.6rem'></div>", unsafe_allow_html=True)
+# ── Tab State ──────────────────────────────────────────────────────────────────
+if 'active_tab' not in st.session_state:
+    st.session_state.active_tab = 'single'
 
-# ══════════════════════════════════════════════════════════════════════════════
-# VIEW: RESULT — SINGLE PREDICT
-# ══════════════════════════════════════════════════════════════════════════════
-if st.session_state.view == 'result' and st.session_state.active_tab == 'single':
-    r = st.session_state.single_result
-
-    st.markdown('<div class="back-btn">', unsafe_allow_html=True)
-    if st.button("← Kembali ke form"):
-        st.session_state.view = 'form'
+nav_c1, nav_c2, nav_spacer = st.columns([2, 2, 6])
+with nav_c1:
+    if st.button("Single Predict", key="tab_single",
+                 type="primary" if st.session_state.active_tab=='single' else "secondary"):
+        st.session_state.active_tab = 'single'
         st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    prob_html = ""
-    for lbl, prob, color in [('High',r['ph'],'var(--high)'),('Medium',r['pm'],'#7fb1ff'),('Low',r['pl'],'var(--accent)')]:
-        pct = prob*100
-        prob_html += f"""<div class="prob-item">
-            <div class="prob-header">
-                <span class="prob-name">{lbl}</span>
-                <span class="prob-pct">{pct:.1f}%</span>
-            </div>
-            <div class="prob-track"><div class="prob-fill" style="width:{pct}%;background:{color};"></div></div>
-        </div>"""
-
-    st.markdown(f"""
-    <div class="result-wrap">
-        <div class="result-left">
-            <div class="result-eyebrow">Match Priority</div>
-            <div class="result-label color-{r['label']}">{r['label']}</div>
-            <div class="confidence-pill">Confidence&nbsp;<strong>{r['conf']:.1f}%</strong></div>
-        </div>
-        <div class="result-right">{prob_html}</div>
-    </div>""", unsafe_allow_html=True)
-
-    st.markdown(f"""<div class="chips">
-        <span class="chip">🏆 {r['tournament']}</span>
-        <span class="chip">🏠 {r['home']} vs ✈️ {r['away']}</span>
-        <span class="chip">📺 {r['channel']}</span>
-        <span class="chip">📅 {r['date']} {r['time']}</span>
-        <span class="chip">⏱️ {r['duration']} mnt</span>
-        <span class="chip">{"🔒 Exclusive" if r['exclusive'] else "🔓 Open"}</span>
-        <span class="chip">{"🔑 Login" if r['login_gating'] else "🚪 Free"}</span>
-    </div>""", unsafe_allow_html=True)
-
-    st.markdown("<div style='height:1.6rem'></div>", unsafe_allow_html=True)
-    st.markdown('<div class="group-title"><span class="group-num">⟳</span> Historis Tim</div>', unsafe_allow_html=True)
-    res_col1, res_col2 = st.columns([1, 1], gap="large")
-
-    for col, team, p, w, n in [(res_col1, r['home'],r['home_p'],r['home_w'],r['hn']),(res_col2, r['away'],r['away_p'],r['away_w'],r['an'])]:
-        bc = "badge-ok" if n>=3 else "badge-warn"
-        bt = f"✓ {n} matches" if n>=3 else f"⚠ {n} matches"
-        col.markdown(f"""<div class="hist-card">
-            <div class="hist-team">{team}</div>
-            <div class="hist-row"><span class="hist-key">Avg Plays</span><span class="hist-val">{fmt(p)}</span></div>
-            <div class="hist-row"><span class="hist-key">Avg Watchers</span><span class="hist-val">{fmt(w)}</span></div>
-            <span class="hist-badge {bc}">{bt}</span>
-        </div>""", unsafe_allow_html=True)
-
-# ══════════════════════════════════════════════════════════════════════════════
-# VIEW: RESULT — BULK PREDICT
-# ══════════════════════════════════════════════════════════════════════════════
-elif st.session_state.view == 'result' and st.session_state.active_tab == 'bulk':
-    df_result = st.session_state.bulk_result
-    res_df    = st.session_state.bulk_res_df
-
-    st.markdown('<div class="back-btn">', unsafe_allow_html=True)
-    if st.button("← Kembali ke upload"):
-        st.session_state.view = 'form'
+with nav_c2:
+    if st.button("Bulk Upload", key="tab_bulk",
+                 type="primary" if st.session_state.active_tab=='bulk' else "secondary"):
+        st.session_state.active_tab = 'bulk'
         st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown("<div style='height:0.4rem'></div>", unsafe_allow_html=True)
-
-    counts = res_df['match_priority_level'].value_counts()
-    n_h = counts.get('High',0)
-    n_m = counts.get('Medium',0)
-    n_l = counts.get('Low',0)
-
-    st.markdown('<div class="group-title"><span class="group-num">✓</span> Hasil Prediksi</div>', unsafe_allow_html=True)
-    st.markdown(f"""<div class="stat-row">
-        <div class="stat-box"><div class="stat-num color-HIGH">{n_h}</div><div class="stat-lbl">High</div></div>
-        <div class="stat-box"><div class="stat-num color-MEDIUM">{n_m}</div><div class="stat-lbl">Medium</div></div>
-        <div class="stat-box"><div class="stat-num color-LOW">{n_l}</div><div class="stat-lbl">Low</div></div>
-    </div>""", unsafe_allow_html=True)
-
-    st.markdown('<div class="group-title"><span class="group-num">▤</span> Preview</div>', unsafe_allow_html=True)
-    show_cols = ['team_home','team_away','match_tournament','match_date_start',
-                 'match_priority_level','prob_high','prob_medium','prob_low']
-    show_cols = [c for c in show_cols if c in df_result.columns]
-    df_show   = df_result[show_cols].head(20)
-
-    rows_html = ""
-    for _, rr in df_show.iterrows():
-        lbl = rr.get('match_priority_level','—')
-        badge = f'<span class="badge badge-{lbl}">{lbl}</span>' if lbl in ['High','Medium','Low'] else lbl
-        dt_str = str(rr.get('match_date_start',''))[:16] if pd.notna(rr.get('match_date_start')) else '—'
-        rows_html += f"""<tr>
-            <td>{rr.get('team_home','—')}</td>
-            <td>{rr.get('team_away','—')}</td>
-            <td style="font-size:0.72rem;color:var(--text2)">{str(rr.get('match_tournament','—'))[:25]}</td>
-            <td style="font-size:0.72rem">{dt_str}</td>
-            <td>{badge}</td>
-            <td style="color:var(--high)">{rr.get('prob_high','—')}%</td>
-        </tr>"""
-
-    st.markdown(f"""
-    <div style="overflow-x:auto; border:1px solid var(--border); border-radius:10px; overflow:hidden;">
-    <table class="result-table">
-        <thead><tr>
-            <th>Home</th><th>Away</th><th>Tournament</th><th>Date</th><th>Priority</th><th>P(High)</th>
-        </tr></thead>
-        <tbody>{rows_html}</tbody>
-    </table>
-    </div>
-    <div style="font-size:0.7rem;color:var(--text3);margin-top:0.4rem">
-        Menampilkan {min(20,len(df_result))} dari {len(df_result)} baris
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("<div style='height:1rem'></div>", unsafe_allow_html=True)
-    csv_out = df_result.to_csv(index=False)
-    st.download_button(
-        label="Download hasil CSV",
-        data=csv_out,
-        file_name="bulk_predict_result.csv",
-        mime="text/csv",
-    )
+st.markdown("<hr>", unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
-# VIEW: FORM — SINGLE PREDICT
+# TAB: SINGLE PREDICT
 # ══════════════════════════════════════════════════════════════════════════════
-elif st.session_state.active_tab == 'single':
+if st.session_state.active_tab == 'single':
 
-    col_left = st.container()
+    col_left, col_right = st.columns([5, 4], gap="large")
 
     with col_left:
-        with st.container(border=True):
-            st.markdown('<div class="group-title"><span class="group-num">1</span> Tournament</div>', unsafe_allow_html=True)
-            tournament_list     = sorted(tournaments_df['tournament_title'].dropna().tolist())
-            selected_tournament = st.selectbox("Pilih tournament", tournament_list, index=0)
-            t_row = tournaments_df[tournaments_df['tournament_title']==selected_tournament].iloc[0]
-            channels_raw    = str(t_row['tournament_channel']) if pd.notna(t_row['tournament_channel']) else ''
-            channel_options = [x.strip() for x in channels_raw.split(',') if x.strip()]
+        st.markdown('<div class="section-title"><span class="dot"></span>Tournament</div>', unsafe_allow_html=True)
+        tournament_list     = sorted(tournaments_df['tournament_title'].dropna().tolist())
+        selected_tournament = st.selectbox("Pilih Tournament", tournament_list, index=0, label_visibility="collapsed")
+        t_row = tournaments_df[tournaments_df['tournament_title']==selected_tournament].iloc[0]
+        channels_raw    = str(t_row['tournament_channel']) if pd.notna(t_row['tournament_channel']) else ''
+        channel_options = [x.strip() for x in channels_raw.split(',') if x.strip()]
 
-            af1, af2, af3, af4 = st.columns(4)
-            def af_card(col, label, val):
-                col.markdown(f"""<div class="card"><div class="card-label">{label}</div>
-                    <div class="card-value">{val if val and str(val)!='nan' else '—'}</div></div>""", unsafe_allow_html=True)
-            af_card(af1, "Premier", t_row['tournament_premier'] if pd.notna(t_row['tournament_premier']) else '—')
-            af_card(af2, "Coverage", t_row['tournament_coverage'] if pd.notna(t_row['tournament_coverage']) else '—')
-            af_card(af3, "Gender",   t_row['tournament_gender']   if pd.notna(t_row['tournament_gender'])   else '—')
-            af_card(af4, "Org",      t_row['tournament_organization'] if pd.notna(t_row['tournament_organization']) else '—')
-            selected_channel = st.selectbox("Channel siaran", options=channel_options if channel_options else ['Unknown'])
+        st.markdown('<div class="section-title"><span class="dot"></span>Match Info</div>', unsafe_allow_html=True)
+        af1, af2, af3, af4 = st.columns(4)
+        def af_card(col, label, val):
+            col.markdown(f"""<div class="info-card"><div class="info-card-label">{label}</div>
+                <div class="info-card-value">{val if val and str(val)!='nan' else '—'}</div></div>""", unsafe_allow_html=True)
+        af_card(af1, "Premier", t_row['tournament_premier'] if pd.notna(t_row['tournament_premier']) else '—')
+        af_card(af2, "Coverage", t_row['tournament_coverage'] if pd.notna(t_row['tournament_coverage']) else '—')
+        af_card(af3, "Gender",   t_row['tournament_gender']   if pd.notna(t_row['tournament_gender'])   else '—')
+        af_card(af4, "Org",      t_row['tournament_organization'] if pd.notna(t_row['tournament_organization']) else '—')
+        st.markdown("<br>", unsafe_allow_html=True)
+        selected_channel = st.selectbox("Channel Siaran", options=channel_options if channel_options else ['Unknown'])
 
-        st.markdown("<div style='height:1.2rem'></div>", unsafe_allow_html=True)
+        st.markdown('<div class="section-title"><span class="dot"></span>Teams</div>', unsafe_allow_html=True)
+        available_teams = get_teams_for_tournament(t_row, leagues_df, teams_df)
+        if not available_teams:
+            st.warning("Tidak ada tim terdaftar untuk turnamen ini."); st.stop()
+        tc1, tc2 = st.columns(2)
+        with tc1: selected_home = st.selectbox("Team Home", available_teams, index=0)
+        with tc2:
+            away_opts     = [t for t in available_teams if t!=selected_home]
+            selected_away = st.selectbox("Team Away", away_opts, index=0)
 
-        with st.container(border=True):
-            st.markdown('<div class="group-title"><span class="group-num">2</span> Tim</div>', unsafe_allow_html=True)
-            available_teams = get_teams_for_tournament(t_row, leagues_df, teams_df)
-            if not available_teams:
-                st.warning("Tidak ada tim terdaftar."); st.stop()
-            tc1, tc2 = st.columns(2)
-            with tc1: selected_home = st.selectbox("🏠 Team home", available_teams, index=0)
-            with tc2:
-                away_opts     = [t for t in available_teams if t!=selected_home]
-                selected_away = st.selectbox("✈️ Team away", away_opts, index=0)
+        st.markdown('<div class="section-title"><span class="dot"></span>Schedule</div>', unsafe_allow_html=True)
+        sc1, sc2, sc3 = st.columns(3)
+        with sc1: match_date = st.date_input("Tanggal", value=date.today())
+        with sc2: match_time_val = st.time_input("Kick-off", value=time(20, 0))
+        with sc3: duration = st.number_input("Durasi (menit)", min_value=30, max_value=600, value=120, step=15)
 
-        st.markdown("<div style='height:1.2rem'></div>", unsafe_allow_html=True)
+        st.markdown('<div class="section-title"><span class="dot"></span>Access Flags</div>', unsafe_allow_html=True)
+        fl1, fl2, fl3 = st.columns(3)
+        with fl1: match_exclusive    = st.checkbox("Exclusive", value=False)
+        with fl2: match_login_gating = st.checkbox("Login Gating", value=False)
+        with fl3: match_drm          = st.checkbox("DRM", value=True)
 
-        with st.container(border=True):
-            st.markdown('<div class="group-title"><span class="group-num">3</span> Jadwal & akses</div>', unsafe_allow_html=True)
-            sc1, sc2, sc3 = st.columns(3)
-            with sc1: match_date = st.date_input("Tanggal", value=date.today())
-            with sc2: match_time_val = st.time_input("Kick-off", value=time(20, 0))
-            with sc3: duration = st.number_input("Durasi (menit)", min_value=30, max_value=600, value=120, step=15)
+        st.markdown("<br>", unsafe_allow_html=True)
+        predict_btn = st.button("Predict Priority")
 
-            fl1, fl2, fl3 = st.columns(3)
-            with fl1: match_exclusive    = st.checkbox("🔒 Exclusive",    value=False)
-            with fl2: match_login_gating = st.checkbox("🔑 Login Gating", value=False)
-            with fl3: match_drm          = st.checkbox("🛡️ DRM",          value=True)
-
-        st.markdown("<div style='height:1.6rem'></div>", unsafe_allow_html=True)
-        predict_btn = st.button("Predict Priority", type="primary")
-
+    with col_right:
         if predict_btn:
-            with st.spinner("Memprediksi..."):
+            with st.spinner(""):
                 match_dt = datetime.datetime.combine(match_date, match_time_val)
                 row_data, hn, an, home_p, home_w, away_p, away_w = build_features(
                     selected_home, selected_away, match_dt,
@@ -621,69 +534,100 @@ elif st.session_state.active_tab == 'single':
                 label, ph, pm, pl, proba_arr = predict_one(row_data)
                 conf = max(ph, pm, pl) * 100
 
-            st.session_state.single_result = {
-                'label': label, 'conf': conf, 'ph': ph, 'pm': pm, 'pl': pl,
-                'tournament': selected_tournament, 'home': selected_home, 'away': selected_away,
-                'channel': selected_channel, 'date': match_date, 'time': match_time_val.strftime('%H:%M'),
-                'duration': duration, 'exclusive': match_exclusive, 'login_gating': match_login_gating,
-                'home_p': home_p, 'home_w': home_w, 'away_p': away_p, 'away_w': away_w,
-                'hn': hn, 'an': an,
-            }
-            st.session_state.view = 'result'
-            st.rerun()
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# VIEW: FORM — BULK UPLOAD
-# ══════════════════════════════════════════════════════════════════════════════
-else:
-    bl = st.container()
-
-    with bl:
-        st.markdown('<div class="group-title"><span class="group-num">1</span> Upload CSV</div>', unsafe_allow_html=True)
-
-        with st.container(border=True):
-            st.markdown("""<div class="bulk-info-title">Format file</div>
-            <div class="bulk-info-text">
-                Upload CSV dengan kolom berikut (sama seperti format <code>matches_data.xlsx</code>).
-                Kolom <code>match_priority_level</code> akan diisi otomatis oleh model.
+            st.markdown(f"""
+            <div class="result-hero {label.upper()}">
+                <div class="result-eyebrow">Match Priority Level</div>
+                <div class="result-label {label.upper()}">{label}</div>
+                <div class="confidence-pill">Confidence&nbsp;&nbsp;<strong>{conf:.1f}%</strong></div>
             </div>""", unsafe_allow_html=True)
 
-            required_cols = [
-                'match_date_start', 'team_home', 'team_away',
-                'match_tournament', 'match_channel', 'match_premier_status',
-                'match_coverage', 'match_gender', 'match_organization',
-                'match_exclusive', 'match_login_gating', 'match_drm', 'match_duration'
-            ]
-            chips_html = ''.join([f'<span class="required-col">{c}</span>' for c in required_cols])
-            st.markdown(f'<div style="margin:0.8rem 0 1rem 0">{chips_html}</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-title"><span class="dot"></span>Probabilitas</div>', unsafe_allow_html=True)
+            color_map = {'High':'var(--red)','Medium':'var(--blue)','Low':'var(--green)'}
+            for lbl, prob in [('High',ph),('Medium',pm),('Low',pl)]:
+                pct = prob*100
+                color = color_map[lbl]
+                st.markdown(f"""<div class="prob-item">
+                    <div class="prob-header">
+                        <span class="prob-name" style="color:{color}">{lbl}</span>
+                        <span class="prob-pct" style="color:{color}">{pct:.1f}%</span>
+                    </div>
+                    <div class="prob-track"><div class="prob-fill" style="width:{pct}%;background:{color};"></div></div>
+                </div>""", unsafe_allow_html=True)
 
-            template_df = pd.DataFrame(columns=required_cols + ['match_main_genre', 'match_priority_level'])
-            template_df.loc[0] = [
-                '2026-05-10 19:30:00', 'Manchester United', 'Liverpool',
-                'Premier League 2025/26', 'CTV 5', 'PREMIER LEAGUE , ULTIMATE',
-                'INDONESIA , TIMOR LESTE', 'Men', 'FIFA; UEFA; European Leagues; The FA',
-                0, 1, 1, '02:00:00', 'Football', ''
-            ]
-            csv_template = template_df.to_csv(index=False)
-            st.download_button(
-                label="Download template CSV",
-                data=csv_template,
-                file_name="template_bulk_predict.csv",
-                mime="text/csv",
-            )
+            st.markdown('<div class="section-title"><span class="dot"></span>Historis Tim</div>', unsafe_allow_html=True)
+            hc1, hc2 = st.columns(2)
+            for col_h, team, p, w, n in [(hc1,selected_home,home_p,home_w,hn),(hc2,selected_away,away_p,away_w,an)]:
+                bc = "badge-ok" if n>=3 else "badge-warn"
+                bt = f"{n} matches tersedia" if n>=3 else f"Data terbatas — {n} matches"
+                col_h.markdown(f"""<div class="hist-card">
+                    <div class="hist-team">{team}</div>
+                    <div class="hist-row"><span class="hist-key">Avg Plays</span><span class="hist-val">{fmt(p)}</span></div>
+                    <div class="hist-row"><span class="hist-key">Avg Watchers</span><span class="hist-val">{fmt(w)}</span></div>
+                    <span class="hist-badge {bc}">{bt}</span>
+                </div>""", unsafe_allow_html=True)
 
-        st.markdown("<div style='height:1.2rem'></div>", unsafe_allow_html=True)
+            st.markdown('<div class="section-title"><span class="dot"></span>Summary</div>', unsafe_allow_html=True)
+            st.markdown(f"""<div class="chips">
+                <span class="chip">{selected_tournament}</span>
+                <span class="chip">{selected_home} vs {selected_away}</span>
+                <span class="chip">{selected_channel}</span>
+                <span class="chip">{match_date} · {match_time_val.strftime('%H:%M')}</span>
+                <span class="chip">{duration} menit</span>
+                <span class="chip">{"Exclusive" if match_exclusive else "Open"}</span>
+                <span class="chip">{"Login Gating" if match_login_gating else "Akses Bebas"}</span>
+            </div>""", unsafe_allow_html=True)
+        else:
+            st.markdown("""<div class="empty-state">
+                <div class="empty-icon">⚽</div>
+                <div class="empty-title">Siap Memprediksi</div>
+                <div class="empty-sub">Lengkapi form di sebelah kiri, lalu klik<br><strong>Predict Priority</strong> untuk melihat hasilnya.</div>
+            </div>""", unsafe_allow_html=True)
 
-        with st.container(border=True):
-            uploaded_file = st.file_uploader("Upload CSV", type=['csv'])
+
+# ══════════════════════════════════════════════════════════════════════════════
+# TAB: BULK UPLOAD
+# ══════════════════════════════════════════════════════════════════════════════
+else:
+    bl, br = st.columns([5, 4], gap="large")
+
+    with bl:
+        st.markdown('<div class="section-title"><span class="dot"></span>Upload CSV</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-sub">Unggah file CSV dengan format yang sama seperti <strong>matches_data.xlsx</strong>. Kolom <strong>match_priority_level</strong> akan diisi otomatis oleh model.</div>', unsafe_allow_html=True)
+
+        required_cols = [
+            'match_date_start', 'team_home', 'team_away',
+            'match_tournament', 'match_channel', 'match_premier_status',
+            'match_coverage', 'match_gender', 'match_organization',
+            'match_exclusive', 'match_login_gating', 'match_drm', 'match_duration'
+        ]
+        chips_html = ''.join([f'<span class="required-col">{c}</span>' for c in required_cols])
+        st.markdown(f'<div style="margin-bottom:1.2rem">{chips_html}</div>', unsafe_allow_html=True)
+
+        # Download template
+        template_df = pd.DataFrame(columns=required_cols + ['match_main_genre', 'match_priority_level'])
+        template_df.loc[0] = [
+            '2026-05-10 19:30:00', 'Manchester United', 'Liverpool',
+            'Premier League 2025/26', 'CTV 5', 'PREMIER LEAGUE , ULTIMATE',
+            'INDONESIA , TIMOR LESTE', 'Men', 'FIFA; UEFA; European Leagues; The FA',
+            0, 1, 1, '02:00:00', 'Football', ''
+        ]
+        csv_template = template_df.to_csv(index=False)
+        st.download_button(
+            label="Download Template CSV",
+            data=csv_template,
+            file_name="template_bulk_predict.csv",
+            mime="text/csv",
+        )
+
+        st.markdown("<br>", unsafe_allow_html=True)
+        uploaded_file = st.file_uploader("Upload CSV", type=['csv'], label_visibility="collapsed")
 
         if uploaded_file:
             df_upload = pd.read_csv(uploaded_file)
 
             missing = [c for c in required_cols if c not in df_upload.columns]
             if missing:
-                st.error(f"Kolom tidak ditemukan: {', '.join(missing)}")
+                st.markdown(f'<div class="alert-banner">Kolom tidak ditemukan: {", ".join(missing)}</div>', unsafe_allow_html=True)
             else:
                 df_valid = df_upload.copy()
                 if 'match_main_genre' in df_valid.columns:
@@ -695,14 +639,13 @@ else:
                 n_valid   = len(df_valid)
                 n_skipped = n_total - n_valid
 
-                st.markdown("<div style='height:1.2rem'></div>", unsafe_allow_html=True)
                 st.markdown(f"""<div class="stat-row">
-                    <div class="stat-box"><div class="stat-num">{n_total}</div><div class="stat-lbl">Total rows</div></div>
-                    <div class="stat-box"><div class="stat-num" style="color:var(--accent)">{n_valid}</div><div class="stat-lbl">Valid (football)</div></div>
-                    <div class="stat-box"><div class="stat-num" style="color:var(--text3)">{n_skipped}</div><div class="stat-lbl">Skipped</div></div>
+                    <div class="stat-box"><div class="stat-num">{n_total}</div><div class="stat-lbl">Total Rows</div></div>
+                    <div class="stat-box"><div class="stat-num" style="color:var(--green)">{n_valid}</div><div class="stat-lbl">Valid (Football)</div></div>
+                    <div class="stat-box"><div class="stat-num" style="color:var(--ink-soft)">{n_skipped}</div><div class="stat-lbl">Skipped</div></div>
                 </div>""", unsafe_allow_html=True)
 
-                run_bulk = st.button("Jalankan bulk predict", type="primary")
+                run_bulk = st.button("Jalankan Bulk Predict")
 
                 if run_bulk and n_valid > 0:
                     results = []
@@ -754,7 +697,72 @@ else:
                     df_result['prob_medium'] = res_df['prob_medium'].values
                     df_result['prob_low']    = res_df['prob_low'].values
 
-                    st.session_state.bulk_result = df_result
-                    st.session_state.bulk_res_df = res_df
-                    st.session_state.view = 'result'
-                    st.rerun()
+                    st.session_state['bulk_result'] = df_result
+                    st.session_state['bulk_res_df'] = res_df
+
+    with br:
+        if 'bulk_result' in st.session_state:
+            df_result = st.session_state['bulk_result']
+            res_df    = st.session_state['bulk_res_df']
+
+            counts = res_df['match_priority_level'].value_counts()
+            n_h = counts.get('High',0)
+            n_m = counts.get('Medium',0)
+            n_l = counts.get('Low',0)
+
+            st.markdown('<div class="section-title"><span class="dot"></span>Hasil Prediksi</div>', unsafe_allow_html=True)
+            st.markdown(f"""<div class="stat-row">
+                <div class="stat-box"><div class="stat-num HIGH">{n_h}</div><div class="stat-lbl">High</div></div>
+                <div class="stat-box"><div class="stat-num MEDIUM">{n_m}</div><div class="stat-lbl">Medium</div></div>
+                <div class="stat-box"><div class="stat-num LOW">{n_l}</div><div class="stat-lbl">Low</div></div>
+            </div>""", unsafe_allow_html=True)
+
+            st.markdown('<div class="section-title"><span class="dot"></span>Preview</div>', unsafe_allow_html=True)
+            show_cols = ['team_home','team_away','match_tournament','match_date_start',
+                         'match_priority_level','prob_high','prob_medium','prob_low']
+            show_cols = [c for c in show_cols if c in df_result.columns]
+            df_show   = df_result[show_cols].head(20)
+
+            rows_html = ""
+            for _, r in df_show.iterrows():
+                lbl = r.get('match_priority_level','—')
+                badge = f'<span class="badge badge-{lbl}">{lbl}</span>' if lbl in ['High','Medium','Low'] else lbl
+                dt_str = str(r.get('match_date_start',''))[:16] if pd.notna(r.get('match_date_start')) else '—'
+                tour = str(r.get('match_tournament','—'))[:25]
+                rows_html += f"""<tr>
+                    <td>{r.get('team_home','—')}</td>
+                    <td>{r.get('team_away','—')}</td>
+                    <td style="font-size:0.8rem;color:var(--ink-soft)">{tour}</td>
+                    <td style="font-size:0.8rem">{dt_str}</td>
+                    <td>{badge}</td>
+                    <td style="color:var(--red);font-weight:700">{r.get('prob_high','—')}%</td>
+                </tr>"""
+
+            st.markdown(f"""
+            <div style="overflow-x:auto; border:2px solid var(--ink); border-radius:14px; overflow:hidden;">
+            <table class="result-table">
+                <thead><tr>
+                    <th>Home</th><th>Away</th><th>Tournament</th><th>Date</th><th>Priority</th><th>P(High)</th>
+                </tr></thead>
+                <tbody>{rows_html}</tbody>
+            </table>
+            </div>
+            <div style="font-size:0.8rem;color:var(--ink-soft);margin-top:0.5rem">
+                Menampilkan {min(20,len(df_result))} dari {len(df_result)} baris
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("<br>", unsafe_allow_html=True)
+            csv_out = df_result.to_csv(index=False)
+            st.download_button(
+                label="Download Hasil CSV",
+                data=csv_out,
+                file_name="bulk_predict_result.csv",
+                mime="text/csv",
+            )
+        else:
+            st.markdown("""<div class="empty-state">
+                <div class="empty-icon">📂</div>
+                <div class="empty-title">Belum Ada Hasil</div>
+                <div class="empty-sub">Unggah file CSV di sebelah kiri,<br>lalu klik <strong>Jalankan Bulk Predict</strong>.</div>
+            </div>""", unsafe_allow_html=True)
