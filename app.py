@@ -90,7 +90,7 @@ html, body, [class*="css"], .stApp {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg) !important;
     color: var(--text) !important;
-    font-size: 16px;
+    font-size: 17px;
 }
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg2); }
@@ -231,36 +231,33 @@ div[data-testid="stTimeInput"] label,
 div[data-testid="stNumberInput"] label,
 div[data-testid="stCheckbox"] label,
 div[data-testid="stFileUploader"] label {
-    color:var(--text2) !important; font-size:0.92rem !important;
+    color:var(--text2) !important; font-size:1rem !important;
     font-weight:700 !important; letter-spacing:0.2px !important;
     text-transform:none !important; font-family:'Inter',sans-serif !important;
     margin-bottom:0.3rem !important;
 }
-div[data-testid="stSelectbox"] > div > div,
+div[data-testid="stSelectbox"] > div,
 div[data-testid="stDateInput"] input,
 div[data-testid="stTimeInput"] input,
 div[data-testid="stNumberInput"] input,
-div[data-testid="stDateInput"] > div > div,
-div[data-testid="stTimeInput"] > div > div,
-div[data-testid="stNumberInput"] > div,
 div[data-testid="stFileUploader"] section {
     background:var(--bg2) !important;
     border-color:var(--border) !important;
     color:var(--text) !important;
     border-radius:10px !important;
-    font-size:1.05rem !important;
+    font-size:1.1rem !important;
 }
-div[data-testid="stSelectbox"] > div > div { min-height:3rem !important; }
-div[data-testid="stSelectbox"] > div > div > div { color:var(--text) !important; font-size:1.05rem !important; }
+div[data-testid="stSelectbox"] > div { min-height:3.1rem !important; }
+div[data-testid="stSelectbox"] div[data-baseweb="select"] span { font-size:1.1rem !important; color:var(--text) !important; }
 div[data-testid="stDateInput"] input,
 div[data-testid="stTimeInput"] input,
-div[data-testid="stNumberInput"] input { padding:0.7rem 0.9rem !important; font-family:'JetBrains Mono',monospace !important; }
+div[data-testid="stNumberInput"] input { padding:0.75rem 0.9rem !important; font-family:'JetBrains Mono',monospace !important; }
 div[data-testid="stNumberInput"] button { background:var(--bg3) !important; color:var(--text) !important; border-color:var(--border) !important; }
 div[data-testid="stFileUploader"] > div { background:var(--bg2) !important; border-color:var(--border) !important; border-radius:12px !important; padding:1.2rem !important; }
 div[data-testid="stFileUploader"] section span,
-div[data-testid="stFileUploader"] section small { color:var(--text2) !important; font-size:0.95rem !important; }
+div[data-testid="stFileUploader"] section small { color:var(--text2) !important; font-size:1rem !important; }
 div[data-testid="stCheckbox"] { background:var(--bg3); border-radius:10px; padding:0.8rem 1rem; }
-div[data-testid="stCheckbox"] label p { color:var(--text) !important; font-size:1rem !important; text-transform:none !important; letter-spacing:normal !important; font-weight:600 !important; }
+div[data-testid="stCheckbox"] label p { color:var(--text) !important; font-size:1.05rem !important; text-transform:none !important; letter-spacing:normal !important; font-weight:600 !important; }
 
 /* ── Back link button ──────────────────────────────────────────────────── */
 .back-btn .stButton > button {
