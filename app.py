@@ -231,6 +231,22 @@ div[data-testid="stCheckbox"] label p { color:var(--text) !important; font-size:
     width:auto !important; padding:0.55rem 1.4rem !important; letter-spacing:1px !important;
 }
 div[data-testid="stCheckbox"] { background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:0.6rem 0.8rem; }
+
+/* Download button & file uploader browse button */
+.stDownloadButton > button,
+div[data-testid="stFileUploader"] section button {
+    background:var(--bg2) !important; color:var(--text) !important;
+    border:1px solid var(--border2) !important; box-shadow:var(--shadow2) !important;
+    font-family:'Inter',sans-serif !important; font-weight:600 !important;
+    letter-spacing:0.5px !important; text-transform:none !important;
+    width:auto !important;
+}
+.stDownloadButton > button:hover,
+div[data-testid="stFileUploader"] section button:hover { border-color:var(--accent) !important; color:var(--accent) !important; }
+
+/* Limit form width for readability while staying full-width container */
+.main .block-container { max-width:1100px; }
+
 #MainMenu, footer, header { visibility:hidden; }
 .block-container { padding-top:1rem !important; }
 </style>
@@ -508,7 +524,7 @@ elif st.session_state.view == 'result' and st.session_state.active_tab == 'bulk'
 # ══════════════════════════════════════════════════════════════════════════════
 elif st.session_state.active_tab == 'single':
 
-    col_left, col_right = st.columns([5, 4], gap="large")
+    col_left = st.container()
 
     with col_left:
         st.markdown('<div class="sec-head">01 · Tournament</div>', unsafe_allow_html=True)
@@ -578,19 +594,12 @@ elif st.session_state.active_tab == 'single':
             st.session_state.view = 'result'
             st.rerun()
 
-    with col_right:
-        st.markdown("""<div class="empty-state">
-            <div class="empty-icon">⚽</div>
-            <div class="empty-title">Siap Memprediksi</div>
-            <div class="empty-sub">Isi form di kiri, lalu tekan<br>tombol Predict Priority</div>
-        </div>""", unsafe_allow_html=True)
-
 
 # ══════════════════════════════════════════════════════════════════════════════
 # VIEW: FORM — BULK UPLOAD
 # ══════════════════════════════════════════════════════════════════════════════
 else:
-    bl, br = st.columns([5, 4], gap="large")
+    bl = st.container()
 
     with bl:
         st.markdown('<div class="sec-head">Upload CSV</div>', unsafe_allow_html=True)
@@ -710,10 +719,3 @@ else:
                     st.session_state.bulk_res_df = res_df
                     st.session_state.view = 'result'
                     st.rerun()
-
-    with br:
-        st.markdown("""<div class="empty-state">
-            <div class="empty-icon">📂</div>
-            <div class="empty-title">Upload CSV</div>
-            <div class="empty-sub">Upload file CSV di sebelah kiri<br>lalu klik Jalankan Bulk Predict</div>
-        </div>""", unsafe_allow_html=True)
