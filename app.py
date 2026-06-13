@@ -114,8 +114,8 @@ html, body, [class*="css"], .stApp {
 .tab-btn:hover:not(.active) { color:var(--accent); }
 
 .sec-head {
-    font-family:'Sora',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:3px;
-    text-transform:uppercase; color:var(--accent); margin:1.5rem 0 0.8rem 0;
+    font-family:'Sora',sans-serif; font-size:0.85rem; font-weight:700; letter-spacing:3px;
+    text-transform:uppercase; color:var(--accent); margin:1.8rem 0 1rem 0;
     display:flex; align-items:center; gap:0.5rem;
 }
 .sec-head::after { content:''; flex:1; height:1px; background:var(--border); }
@@ -174,10 +174,10 @@ html, body, [class*="css"], .stApp {
 .stat-num { font-family:'Sora',sans-serif; font-size:1.6rem; font-weight:800; }
 .stat-lbl { font-size:0.68rem; color:var(--text3); text-transform:uppercase; letter-spacing:1px; margin-top:0.2rem; }
 
-.empty-state { text-align:center; padding:3rem 1rem; color:var(--text3); }
-.empty-icon { font-size:2.5rem; margin-bottom:0.8rem; opacity:0.5; }
-.empty-title { font-family:'Sora',sans-serif; font-size:1rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:0.4rem; color:var(--text2); }
-.empty-sub { font-size:0.8rem; color:var(--text3); }
+.empty-state { text-align:center; padding:5rem 1.5rem; color:var(--text3); }
+.empty-icon { font-size:4rem; margin-bottom:1.2rem; opacity:0.5; }
+.empty-title { font-family:'Sora',sans-serif; font-size:1.6rem; font-weight:800; letter-spacing:3px; text-transform:uppercase; margin-bottom:0.6rem; color:var(--text2); }
+.empty-sub { font-size:1rem; color:var(--text3); line-height:1.6; }
 
 div[data-testid="stSelectbox"] label,
 div[data-testid="stDateInput"] label,
@@ -185,12 +185,37 @@ div[data-testid="stTimeInput"] label,
 div[data-testid="stNumberInput"] label,
 div[data-testid="stCheckbox"] label,
 div[data-testid="stFileUploader"] label {
-    color:var(--text2) !important; font-size:0.72rem !important;
+    color:var(--text2) !important; font-size:0.75rem !important;
     font-weight:600 !important; letter-spacing:1px !important;
     text-transform:uppercase !important; font-family:'Inter',sans-serif !important;
 }
-div[data-testid="stSelectbox"] > div > div { background:var(--bg2) !important; border-color:var(--border) !important; color:var(--text) !important; border-radius:8px !important; }
+
+/* Force all input-like widgets to light theme */
+div[data-testid="stSelectbox"] > div > div,
+div[data-testid="stDateInput"] input,
+div[data-testid="stTimeInput"] input,
+div[data-testid="stNumberInput"] input,
+div[data-testid="stDateInput"] > div > div,
+div[data-testid="stTimeInput"] > div > div,
+div[data-testid="stNumberInput"] > div,
+div[data-testid="stFileUploader"] section {
+    background:var(--bg2) !important;
+    border-color:var(--border) !important;
+    color:var(--text) !important;
+    border-radius:8px !important;
+    font-size:1rem !important;
+}
+div[data-testid="stSelectbox"] > div > div > div { color:var(--text) !important; font-size:1rem !important; }
+div[data-testid="stNumberInput"] button { background:var(--bg3) !important; color:var(--text) !important; border-color:var(--border) !important; }
 div[data-testid="stFileUploader"] > div { background:var(--bg2) !important; border-color:var(--border) !important; border-radius:10px !important; }
+div[data-testid="stFileUploader"] section span,
+div[data-testid="stFileUploader"] section small { color:var(--text2) !important; }
+
+/* Checkbox styling */
+div[data-testid="stCheckbox"] label p { color:var(--text) !important; font-size:0.85rem !important; text-transform:none !important; letter-spacing:normal !important; font-weight:500 !important; }
+
+/* Generic markdown text bigger and readable */
+.stMarkdown p, .stMarkdown li { font-size:1rem; }
 .stButton > button {
     background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%) !important;
     color:#fff !important; font-family:'Sora',sans-serif !important; font-size:0.9rem !important;
