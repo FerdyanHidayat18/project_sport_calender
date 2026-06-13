@@ -72,17 +72,17 @@ class ManualPreprocessor:
 # ── Page Config ────────────────────────────────────────────────────────────────
 st.set_page_config(page_title="Match Priority Predictor", page_icon="⚽", layout="wide")
 
-# ── Theme (clean & modern) ───────────────────────────────────────────────────
+# ── Theme (clean & modern, bigger type) ──────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-    --bg:#fafbfc; --bg2:#ffffff; --bg3:#f1f4f7; --border:#e7ebef; --border2:#d6dde4;
+    --bg:#f5f7fa; --bg2:#ffffff; --bg3:#eef2f6; --border:#e3e8ed; --border2:#cdd5dd;
     --text:#10151f; --text2:#5b6573; --text3:#9aa3b0;
     --accent:#1b6e4c; --accent-soft:#e6f3ec;
     --high:#d64545; --med:#2e6fe0; --low:#1b6e4c;
-    --shadow:0 12px 32px rgba(16,21,31,0.06); --shadow2:0 1px 3px rgba(16,21,31,0.04);
+    --shadow:0 16px 40px rgba(16,21,31,0.08); --shadow2:0 2px 6px rgba(16,21,31,0.05);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -90,26 +90,29 @@ html, body, [class*="css"], .stApp {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg) !important;
     color: var(--text) !important;
+    font-size: 16px;
 }
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg2); }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 
-.main .block-container { max-width: 880px; padding-top: 0 !important; }
+.main .block-container { max-width: 920px; padding-top: 0 !important; padding-bottom: 3rem !important; }
 #MainMenu, footer, header { visibility:hidden; }
 
 /* Header */
-.app-header { display:flex; align-items:baseline; gap:0.6rem; padding:2.2rem 0 0.3rem 0; }
-.app-title { font-family:'Sora',sans-serif; font-size:1.7rem; font-weight:800; color:var(--text); letter-spacing:-0.5px; }
+.app-header { display:flex; align-items:center; gap:0.9rem; padding:2.4rem 0 0.4rem 0; }
+.app-icon { font-size:2.6rem; line-height:1; }
+.app-title { font-family:'Sora',sans-serif; font-size:2.4rem; font-weight:800; color:var(--text); letter-spacing:-1px; line-height:1.1; }
 .app-title span { color:var(--accent); }
-.app-sub { font-size:0.85rem; color:var(--text3); font-weight:500; }
-.app-divider { height:1px; background:var(--border); margin:1.2rem 0 1.8rem 0; border:none; }
+.app-sub { font-size:0.95rem; color:var(--text3); font-weight:500; margin-top:0.15rem; }
+.app-divider { height:1px; background:var(--border); margin:1.4rem 0 2rem 0; border:none; }
 
-/* Buttons */
+/* Tabs as segmented control */
+div[data-testid="column"]:has(button[kind]) { padding:0 !important; }
 .stButton > button {
-    font-family:'Inter',sans-serif !important; font-size:0.92rem !important;
+    font-family:'Inter',sans-serif !important; font-size:1.05rem !important;
     font-weight:600 !important; letter-spacing:0 !important; text-transform:none !important;
-    border-radius:10px !important; padding:0.7rem 1.6rem !important;
+    border-radius:12px !important; padding:0.85rem 1.8rem !important;
     width:100% !important; box-shadow:none !important;
     transition:all 0.15s !important;
 }
@@ -119,93 +122,99 @@ button[kind="secondary"] {
 button[kind="secondary"]:hover { border-color:var(--accent) !important; color:var(--accent) !important; }
 button[kind="primary"] {
     background:var(--accent) !important; color:#fff !important; border:none !important;
-    box-shadow:0 6px 18px rgba(27,110,76,0.22) !important;
+    box-shadow:0 8px 22px rgba(27,110,76,0.28) !important;
 }
 button[kind="primary"]:hover { background:#155c3f !important; color:#fff !important; }
 
-/* Section group */
-.group-title { font-family:'Sora',sans-serif; font-size:0.95rem; font-weight:700; color:var(--text); margin:2rem 0 0.9rem 0; }
-.group-title:first-of-type { margin-top:0; }
+/* Section panels */
+.group-title {
+    font-family:'Sora',sans-serif; font-size:1.25rem; font-weight:800; color:var(--text);
+    margin:0 0 1.1rem 0; display:flex; align-items:center; gap:0.5rem;
+}
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    background:var(--bg2); border:1px solid var(--border) !important; border-radius:18px !important;
+    box-shadow:var(--shadow2);
+}
+div[data-testid="stVerticalBlockBorderWrapper"] > div { padding:1.6rem 1.8rem; }
 
-.card { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:1.1rem 1.3rem; margin-bottom:0.6rem; box-shadow:var(--shadow2); }
-.card-label { font-size:0.7rem; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; color:var(--text3); margin-bottom:0.35rem; }
-.card-value { font-size:0.92rem; font-weight:600; color:var(--text); line-height:1.4; }
-
-.info-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0.6rem; margin-bottom:0.8rem; }
+.card { background:var(--bg3); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin-bottom:0.6rem; }
+.card-label { font-size:0.75rem; font-weight:700; letter-spacing:0.6px; text-transform:uppercase; color:var(--text3); margin-bottom:0.35rem; }
+.card-value { font-size:1.05rem; font-weight:700; color:var(--text); line-height:1.4; }
 
 /* History cards */
-.hist-card { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:1.1rem 1.3rem; box-shadow:var(--shadow2); }
-.hist-team { font-family:'Sora',sans-serif; font-size:0.95rem; font-weight:700; color:var(--text); margin-bottom:0.7rem; }
-.hist-row { display:flex; justify-content:space-between; align-items:center; padding:0.3rem 0; border-bottom:1px solid var(--border); }
+.hist-card { background:var(--bg3); border:1px solid var(--border); border-radius:14px; padding:1.2rem 1.4rem; }
+.hist-team { font-family:'Sora',sans-serif; font-size:1.1rem; font-weight:800; color:var(--text); margin-bottom:0.7rem; }
+.hist-row { display:flex; justify-content:space-between; align-items:center; padding:0.35rem 0; border-bottom:1px solid var(--border); }
 .hist-row:last-of-type { border-bottom:none; }
-.hist-key { font-size:0.8rem; color:var(--text2); }
-.hist-val { font-size:0.9rem; font-weight:700; color:var(--text); }
-.hist-badge { display:inline-block; font-size:0.68rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:6px; margin-top:0.6rem; }
+.hist-key { font-size:0.92rem; color:var(--text2); }
+.hist-val { font-size:1.05rem; font-weight:700; color:var(--text); }
+.hist-badge { display:inline-block; font-size:0.78rem; font-weight:700; padding:0.25rem 0.7rem; border-radius:6px; margin-top:0.7rem; }
 .badge-ok { background:var(--accent-soft); color:var(--accent); }
 .badge-warn { background:#fdf3e3; color:#b87213; }
 
 /* Result hero — ticket style */
 .result-wrap {
-    border-radius:18px; padding:2.4rem 2rem; text-align:center;
-    background:var(--bg2); border:1px solid var(--border); box-shadow:var(--shadow);
-    margin-bottom:1.5rem; position:relative;
+    border-radius:22px; padding:3rem 2rem; text-align:center;
+    background:linear-gradient(180deg, var(--bg2) 0%, var(--bg3) 100%);
+    border:1px solid var(--border); box-shadow:var(--shadow);
+    margin-bottom:1.6rem; position:relative; overflow:hidden;
 }
 .result-wrap::before {
-    content:''; position:absolute; top:0; left:0; right:0; height:6px; border-radius:18px 18px 0 0;
+    content:''; position:absolute; top:0; left:0; right:0; height:8px;
 }
 .result-HIGH::before { background:var(--high); }
 .result-MEDIUM::before { background:var(--med); }
 .result-LOW::before { background:var(--low); }
-.result-eyebrow { font-size:0.72rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--text3); margin-bottom:0.6rem; }
-.result-label { font-family:'Sora',sans-serif; font-size:3.4rem; font-weight:800; line-height:1; letter-spacing:-1px; margin-bottom:0.7rem; }
+.result-eyebrow { font-size:0.85rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--text3); margin-bottom:0.8rem; }
+.result-label { font-family:'Sora',sans-serif; font-size:4.5rem; font-weight:800; line-height:1; letter-spacing:-2px; margin-bottom:0.9rem; }
 .color-HIGH { color:var(--high); } .color-MEDIUM { color:var(--med); } .color-LOW { color:var(--low); }
-.confidence-pill { display:inline-flex; align-items:center; gap:0.4rem; background:var(--bg3); border-radius:20px; padding:0.35rem 0.9rem; font-size:0.85rem; color:var(--text2); font-weight:500; }
+.confidence-pill { display:inline-flex; align-items:center; gap:0.4rem; background:var(--bg2); border:1px solid var(--border); border-radius:24px; padding:0.5rem 1.2rem; font-size:1rem; color:var(--text2); font-weight:600; }
 
 /* Probability bars */
-.prob-item { margin-bottom:0.9rem; }
-.prob-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem; }
-.prob-name { font-size:0.85rem; font-weight:600; }
-.prob-pct { font-size:0.85rem; font-weight:700; }
-.prob-track { height:8px; background:var(--bg3); border-radius:4px; overflow:hidden; }
-.prob-fill { height:100%; border-radius:4px; }
+.prob-item { margin-bottom:1.1rem; }
+.prob-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem; }
+.prob-name { font-size:1rem; font-weight:700; }
+.prob-pct { font-size:1rem; font-weight:800; }
+.prob-track { height:10px; background:var(--bg3); border-radius:5px; overflow:hidden; }
+.prob-fill { height:100%; border-radius:5px; }
 
 /* Summary chips */
-.chips { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.6rem; }
-.chip { background:var(--bg3); border-radius:8px; padding:0.35rem 0.8rem; font-size:0.8rem; color:var(--text2); font-weight:500; }
+.chips { display:flex; flex-wrap:wrap; gap:0.55rem; margin-top:0.7rem; }
+.chip { background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:0.5rem 1rem; font-size:0.92rem; color:var(--text2); font-weight:600; }
 
 /* Bulk section */
-.bulk-info { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:1.3rem 1.5rem; margin-bottom:1.2rem; box-shadow:var(--shadow2); }
-.bulk-info-title { font-family:'Sora',sans-serif; font-size:0.95rem; font-weight:700; color:var(--text); margin-bottom:0.5rem; }
-.bulk-info-text { font-size:0.85rem; color:var(--text2); line-height:1.7; }
-.required-col { display:inline-block; background:var(--bg3); border-radius:6px; padding:0.2rem 0.55rem; font-size:0.75rem; font-family:monospace; color:var(--text2); margin:0.15rem; }
+.bulk-info-title { font-family:'Sora',sans-serif; font-size:1.05rem; font-weight:800; color:var(--text); margin-bottom:0.6rem; }
+.bulk-info-text { font-size:0.95rem; color:var(--text2); line-height:1.7; }
+.required-col { display:inline-block; background:var(--bg3); border:1px solid var(--border); border-radius:6px; padding:0.25rem 0.65rem; font-size:0.85rem; font-family:monospace; color:var(--text2); margin:0.18rem; }
 
 /* Result table */
-.result-table { width:100%; border-collapse:collapse; font-size:0.85rem; }
-.result-table th { background:var(--bg3); color:var(--text2); font-weight:600; font-size:0.72rem; letter-spacing:0.5px; text-transform:uppercase; padding:0.7rem 0.9rem; text-align:left; }
-.result-table td { padding:0.65rem 0.9rem; border-bottom:1px solid var(--border); color:var(--text); vertical-align:middle; }
+.result-table { width:100%; border-collapse:collapse; font-size:0.95rem; }
+.result-table th { background:var(--bg3); color:var(--text2); font-weight:700; font-size:0.8rem; letter-spacing:0.5px; text-transform:uppercase; padding:0.8rem 1rem; text-align:left; }
+.result-table td { padding:0.75rem 1rem; border-bottom:1px solid var(--border); color:var(--text); vertical-align:middle; }
 .result-table tr:last-child td { border-bottom:none; }
 .result-table tr:hover td { background:var(--bg3); }
-.badge { display:inline-block; font-size:0.72rem; font-weight:700; padding:0.25rem 0.65rem; border-radius:6px; }
+.badge { display:inline-block; font-size:0.8rem; font-weight:700; padding:0.3rem 0.75rem; border-radius:6px; }
 .badge-HIGH { background:#fbeaea; color:var(--high); }
 .badge-MEDIUM { background:#e9f0fd; color:var(--med); }
 .badge-LOW { background:var(--accent-soft); color:var(--low); }
 
 /* Stat row */
-.stat-row { display:flex; gap:0.8rem; margin-bottom:1.2rem; }
-.stat-box { flex:1; background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:1rem; text-align:center; box-shadow:var(--shadow2); }
-.stat-num { font-family:'Sora',sans-serif; font-size:1.7rem; font-weight:800; }
-.stat-lbl { font-size:0.72rem; color:var(--text3); margin-top:0.25rem; }
+.stat-row { display:flex; gap:1rem; margin-bottom:1.4rem; }
+.stat-box { flex:1; background:var(--bg3); border:1px solid var(--border); border-radius:14px; padding:1.2rem; text-align:center; }
+.stat-num { font-family:'Sora',sans-serif; font-size:2.1rem; font-weight:800; }
+.stat-lbl { font-size:0.85rem; color:var(--text3); margin-top:0.3rem; font-weight:600; }
 
-/* Input widgets — clean light theme */
+/* Input widgets — clean light theme, bigger */
 div[data-testid="stSelectbox"] label,
 div[data-testid="stDateInput"] label,
 div[data-testid="stTimeInput"] label,
 div[data-testid="stNumberInput"] label,
 div[data-testid="stCheckbox"] label,
 div[data-testid="stFileUploader"] label {
-    color:var(--text2) !important; font-size:0.78rem !important;
-    font-weight:600 !important; letter-spacing:0.2px !important;
+    color:var(--text2) !important; font-size:0.92rem !important;
+    font-weight:700 !important; letter-spacing:0.2px !important;
     text-transform:none !important; font-family:'Inter',sans-serif !important;
+    margin-bottom:0.3rem !important;
 }
 div[data-testid="stSelectbox"] > div > div,
 div[data-testid="stDateInput"] input,
@@ -218,22 +227,26 @@ div[data-testid="stFileUploader"] section {
     background:var(--bg2) !important;
     border-color:var(--border) !important;
     color:var(--text) !important;
-    border-radius:10px !important;
-    font-size:0.95rem !important;
+    border-radius:12px !important;
+    font-size:1.05rem !important;
 }
-div[data-testid="stSelectbox"] > div > div > div { color:var(--text) !important; font-size:0.95rem !important; }
+div[data-testid="stSelectbox"] > div > div { min-height:3rem !important; }
+div[data-testid="stSelectbox"] > div > div > div { color:var(--text) !important; font-size:1.05rem !important; }
+div[data-testid="stDateInput"] input,
+div[data-testid="stTimeInput"] input,
+div[data-testid="stNumberInput"] input { padding:0.7rem 0.9rem !important; }
 div[data-testid="stNumberInput"] button { background:var(--bg3) !important; color:var(--text) !important; border-color:var(--border) !important; }
-div[data-testid="stFileUploader"] > div { background:var(--bg2) !important; border-color:var(--border) !important; border-radius:12px !important; }
+div[data-testid="stFileUploader"] > div { background:var(--bg2) !important; border-color:var(--border) !important; border-radius:14px !important; padding:1.2rem !important; }
 div[data-testid="stFileUploader"] section span,
-div[data-testid="stFileUploader"] section small { color:var(--text2) !important; }
-div[data-testid="stCheckbox"] { background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:0.65rem 0.9rem; }
-div[data-testid="stCheckbox"] label p { color:var(--text) !important; font-size:0.88rem !important; text-transform:none !important; letter-spacing:normal !important; font-weight:500 !important; }
+div[data-testid="stFileUploader"] section small { color:var(--text2) !important; font-size:0.95rem !important; }
+div[data-testid="stCheckbox"] { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:0.8rem 1rem; }
+div[data-testid="stCheckbox"] label p { color:var(--text) !important; font-size:1rem !important; text-transform:none !important; letter-spacing:normal !important; font-weight:600 !important; }
 
 /* Back link button */
 .back-btn .stButton > button {
     background:transparent !important; color:var(--text2) !important;
     border:none !important; box-shadow:none !important;
-    width:auto !important; padding:0.4rem 0 !important; font-size:0.88rem !important;
+    width:auto !important; padding:0.4rem 0 !important; font-size:1rem !important; font-weight:600 !important;
 }
 .back-btn .stButton > button:hover { color:var(--accent) !important; }
 
@@ -242,14 +255,14 @@ div[data-testid="stCheckbox"] label p { color:var(--text) !important; font-size:
 div[data-testid="stFileUploader"] section button {
     background:var(--bg2) !important; color:var(--text) !important;
     border:1px solid var(--border2) !important; box-shadow:none !important;
-    font-family:'Inter',sans-serif !important; font-weight:600 !important;
+    font-family:'Inter',sans-serif !important; font-weight:700 !important;
     letter-spacing:0 !important; text-transform:none !important;
-    width:auto !important;
+    width:auto !important; font-size:0.95rem !important; padding:0.7rem 1.4rem !important;
 }
 .stDownloadButton > button:hover,
 div[data-testid="stFileUploader"] section button:hover { border-color:var(--accent) !important; color:var(--accent) !important; }
 
-.stMarkdown p, .stMarkdown li { font-size:0.95rem; }
+.stMarkdown p, .stMarkdown li { font-size:1rem; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -368,8 +381,11 @@ if 'bulk_res_df' not in st.session_state:
 # ── Header ─────────────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="app-header">
-    <div class="app-title">⚽ Match <span>Priority</span></div>
-    <div class="app-sub">&nbsp;· Sport Calendar Predictor</div>
+    <div class="app-icon">⚽</div>
+    <div>
+        <div class="app-title">Match <span>Priority</span></div>
+        <div class="app-sub">Sport Calendar Predictor</div>
+    </div>
 </div>
 <hr class="app-divider">
 """, unsafe_allow_html=True)
@@ -522,45 +538,52 @@ elif st.session_state.active_tab == 'single':
     col_left = st.container()
 
     with col_left:
-        st.markdown('<div class="group-title">Tournament</div>', unsafe_allow_html=True)
-        tournament_list     = sorted(tournaments_df['tournament_title'].dropna().tolist())
-        selected_tournament = st.selectbox("Pilih tournament", tournament_list, index=0)
-        t_row = tournaments_df[tournaments_df['tournament_title']==selected_tournament].iloc[0]
-        channels_raw    = str(t_row['tournament_channel']) if pd.notna(t_row['tournament_channel']) else ''
-        channel_options = [x.strip() for x in channels_raw.split(',') if x.strip()]
+        with st.container(border=True):
+            st.markdown('<div class="group-title">🏆 Tournament</div>', unsafe_allow_html=True)
+            tournament_list     = sorted(tournaments_df['tournament_title'].dropna().tolist())
+            selected_tournament = st.selectbox("Pilih tournament", tournament_list, index=0)
+            t_row = tournaments_df[tournaments_df['tournament_title']==selected_tournament].iloc[0]
+            channels_raw    = str(t_row['tournament_channel']) if pd.notna(t_row['tournament_channel']) else ''
+            channel_options = [x.strip() for x in channels_raw.split(',') if x.strip()]
 
-        af1, af2, af3, af4 = st.columns(4)
-        def af_card(col, label, val):
-            col.markdown(f"""<div class="card"><div class="card-label">{label}</div>
-                <div class="card-value">{val if val and str(val)!='nan' else '—'}</div></div>""", unsafe_allow_html=True)
-        af_card(af1, "Premier", t_row['tournament_premier'] if pd.notna(t_row['tournament_premier']) else '—')
-        af_card(af2, "Coverage", t_row['tournament_coverage'] if pd.notna(t_row['tournament_coverage']) else '—')
-        af_card(af3, "Gender",   t_row['tournament_gender']   if pd.notna(t_row['tournament_gender'])   else '—')
-        af_card(af4, "Org",      t_row['tournament_organization'] if pd.notna(t_row['tournament_organization']) else '—')
-        selected_channel = st.selectbox("Channel siaran", options=channel_options if channel_options else ['Unknown'])
+            af1, af2, af3, af4 = st.columns(4)
+            def af_card(col, label, val):
+                col.markdown(f"""<div class="card"><div class="card-label">{label}</div>
+                    <div class="card-value">{val if val and str(val)!='nan' else '—'}</div></div>""", unsafe_allow_html=True)
+            af_card(af1, "Premier", t_row['tournament_premier'] if pd.notna(t_row['tournament_premier']) else '—')
+            af_card(af2, "Coverage", t_row['tournament_coverage'] if pd.notna(t_row['tournament_coverage']) else '—')
+            af_card(af3, "Gender",   t_row['tournament_gender']   if pd.notna(t_row['tournament_gender'])   else '—')
+            af_card(af4, "Org",      t_row['tournament_organization'] if pd.notna(t_row['tournament_organization']) else '—')
+            selected_channel = st.selectbox("Channel siaran", options=channel_options if channel_options else ['Unknown'])
 
-        st.markdown('<div class="group-title">Tim</div>', unsafe_allow_html=True)
-        available_teams = get_teams_for_tournament(t_row, leagues_df, teams_df)
-        if not available_teams:
-            st.warning("Tidak ada tim terdaftar."); st.stop()
-        tc1, tc2 = st.columns(2)
-        with tc1: selected_home = st.selectbox("🏠 Team home", available_teams, index=0)
-        with tc2:
-            away_opts     = [t for t in available_teams if t!=selected_home]
-            selected_away = st.selectbox("✈️ Team away", away_opts, index=0)
+        st.markdown("<div style='height:1.2rem'></div>", unsafe_allow_html=True)
 
-        st.markdown('<div class="group-title">Jadwal & akses</div>', unsafe_allow_html=True)
-        sc1, sc2, sc3 = st.columns(3)
-        with sc1: match_date = st.date_input("Tanggal", value=date.today())
-        with sc2: match_time_val = st.time_input("Kick-off", value=time(20, 0))
-        with sc3: duration = st.number_input("Durasi (menit)", min_value=30, max_value=600, value=120, step=15)
+        with st.container(border=True):
+            st.markdown('<div class="group-title">👥 Tim</div>', unsafe_allow_html=True)
+            available_teams = get_teams_for_tournament(t_row, leagues_df, teams_df)
+            if not available_teams:
+                st.warning("Tidak ada tim terdaftar."); st.stop()
+            tc1, tc2 = st.columns(2)
+            with tc1: selected_home = st.selectbox("🏠 Team home", available_teams, index=0)
+            with tc2:
+                away_opts     = [t for t in available_teams if t!=selected_home]
+                selected_away = st.selectbox("✈️ Team away", away_opts, index=0)
 
-        fl1, fl2, fl3 = st.columns(3)
-        with fl1: match_exclusive    = st.checkbox("🔒 Exclusive",    value=False)
-        with fl2: match_login_gating = st.checkbox("🔑 Login Gating", value=False)
-        with fl3: match_drm          = st.checkbox("🛡️ DRM",          value=True)
+        st.markdown("<div style='height:1.2rem'></div>", unsafe_allow_html=True)
 
-        st.markdown("<div style='height:1.4rem'></div>", unsafe_allow_html=True)
+        with st.container(border=True):
+            st.markdown('<div class="group-title">📅 Jadwal & akses</div>', unsafe_allow_html=True)
+            sc1, sc2, sc3 = st.columns(3)
+            with sc1: match_date = st.date_input("Tanggal", value=date.today())
+            with sc2: match_time_val = st.time_input("Kick-off", value=time(20, 0))
+            with sc3: duration = st.number_input("Durasi (menit)", min_value=30, max_value=600, value=120, step=15)
+
+            fl1, fl2, fl3 = st.columns(3)
+            with fl1: match_exclusive    = st.checkbox("🔒 Exclusive",    value=False)
+            with fl2: match_login_gating = st.checkbox("🔑 Login Gating", value=False)
+            with fl3: match_drm          = st.checkbox("🛡️ DRM",          value=True)
+
+        st.markdown("<div style='height:1.6rem'></div>", unsafe_allow_html=True)
         predict_btn = st.button("Predict Priority", type="primary")
 
         if predict_btn:
@@ -595,42 +618,43 @@ else:
     bl = st.container()
 
     with bl:
-        st.markdown('<div class="group-title">Upload CSV</div>', unsafe_allow_html=True)
+        st.markdown('<div class="group-title">📂 Upload CSV</div>', unsafe_allow_html=True)
 
-        st.markdown("""<div class="bulk-info">
-            <div class="bulk-info-title">Format file</div>
+        with st.container(border=True):
+            st.markdown("""<div class="bulk-info-title">Format file</div>
             <div class="bulk-info-text">
                 Upload CSV dengan kolom berikut (sama seperti format <code>matches_data.xlsx</code>).
                 Kolom <code>match_priority_level</code> akan diisi otomatis oleh model.
-            </div>
-        </div>""", unsafe_allow_html=True)
+            </div>""", unsafe_allow_html=True)
 
-        required_cols = [
-            'match_date_start', 'team_home', 'team_away',
-            'match_tournament', 'match_channel', 'match_premier_status',
-            'match_coverage', 'match_gender', 'match_organization',
-            'match_exclusive', 'match_login_gating', 'match_drm', 'match_duration'
-        ]
-        chips_html = ''.join([f'<span class="required-col">{c}</span>' for c in required_cols])
-        st.markdown(f'<div style="margin-bottom:1rem">{chips_html}</div>', unsafe_allow_html=True)
+            required_cols = [
+                'match_date_start', 'team_home', 'team_away',
+                'match_tournament', 'match_channel', 'match_premier_status',
+                'match_coverage', 'match_gender', 'match_organization',
+                'match_exclusive', 'match_login_gating', 'match_drm', 'match_duration'
+            ]
+            chips_html = ''.join([f'<span class="required-col">{c}</span>' for c in required_cols])
+            st.markdown(f'<div style="margin:0.8rem 0 1rem 0">{chips_html}</div>', unsafe_allow_html=True)
 
-        template_df = pd.DataFrame(columns=required_cols + ['match_main_genre', 'match_priority_level'])
-        template_df.loc[0] = [
-            '2026-05-10 19:30:00', 'Manchester United', 'Liverpool',
-            'Premier League 2025/26', 'CTV 5', 'PREMIER LEAGUE , ULTIMATE',
-            'INDONESIA , TIMOR LESTE', 'Men', 'FIFA; UEFA; European Leagues; The FA',
-            0, 1, 1, '02:00:00', 'Football', ''
-        ]
-        csv_template = template_df.to_csv(index=False)
-        st.download_button(
-            label="Download template CSV",
-            data=csv_template,
-            file_name="template_bulk_predict.csv",
-            mime="text/csv",
-        )
+            template_df = pd.DataFrame(columns=required_cols + ['match_main_genre', 'match_priority_level'])
+            template_df.loc[0] = [
+                '2026-05-10 19:30:00', 'Manchester United', 'Liverpool',
+                'Premier League 2025/26', 'CTV 5', 'PREMIER LEAGUE , ULTIMATE',
+                'INDONESIA , TIMOR LESTE', 'Men', 'FIFA; UEFA; European Leagues; The FA',
+                0, 1, 1, '02:00:00', 'Football', ''
+            ]
+            csv_template = template_df.to_csv(index=False)
+            st.download_button(
+                label="Download template CSV",
+                data=csv_template,
+                file_name="template_bulk_predict.csv",
+                mime="text/csv",
+            )
 
-        st.markdown("<div style='height:1rem'></div>", unsafe_allow_html=True)
-        uploaded_file = st.file_uploader("Upload CSV", type=['csv'])
+        st.markdown("<div style='height:1.2rem'></div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            uploaded_file = st.file_uploader("Upload CSV", type=['csv'])
 
         if uploaded_file:
             df_upload = pd.read_csv(uploaded_file)
@@ -649,6 +673,7 @@ else:
                 n_valid   = len(df_valid)
                 n_skipped = n_total - n_valid
 
+                st.markdown("<div style='height:1.2rem'></div>", unsafe_allow_html=True)
                 st.markdown(f"""<div class="stat-row">
                     <div class="stat-box"><div class="stat-num">{n_total}</div><div class="stat-lbl">Total rows</div></div>
                     <div class="stat-box"><div class="stat-num" style="color:var(--accent)">{n_valid}</div><div class="stat-lbl">Valid (football)</div></div>
