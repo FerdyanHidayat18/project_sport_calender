@@ -105,20 +105,23 @@ html, body, [class*="css"], .stApp {
 .app-sub { font-size:0.85rem; color:var(--text3); font-weight:500; }
 .app-divider { height:1px; background:var(--border); margin:1.2rem 0 1.8rem 0; border:none; }
 
-/* Tab navigation */
+/* Buttons */
 .stButton > button {
-    background:var(--bg2) !important; color:var(--text2) !important;
     font-family:'Inter',sans-serif !important; font-size:0.92rem !important;
     font-weight:600 !important; letter-spacing:0 !important; text-transform:none !important;
-    border:1px solid var(--border) !important; border-radius:10px !important; padding:0.7rem 1.6rem !important;
+    border-radius:10px !important; padding:0.7rem 1.6rem !important;
     width:100% !important; box-shadow:none !important;
     transition:all 0.15s !important;
 }
-.stButton > button:hover { border-color:var(--accent) !important; color:var(--accent) !important; transform:none !important; }
-button[kind="primary"] {
-    background:var(--text) !important; color:#fff !important; border-color:var(--text) !important;
+button[kind="secondary"] {
+    background:var(--bg2) !important; color:var(--text2) !important; border:1px solid var(--border) !important;
 }
-button[kind="primary"]:hover { background:var(--accent) !important; border-color:var(--accent) !important; color:#fff !important; }
+button[kind="secondary"]:hover { border-color:var(--accent) !important; color:var(--accent) !important; }
+button[kind="primary"] {
+    background:var(--accent) !important; color:#fff !important; border:none !important;
+    box-shadow:0 6px 18px rgba(27,110,76,0.22) !important;
+}
+button[kind="primary"]:hover { background:#155c3f !important; color:#fff !important; }
 
 /* Section group */
 .group-title { font-family:'Sora',sans-serif; font-size:0.95rem; font-weight:700; color:var(--text); margin:2rem 0 0.9rem 0; }
@@ -225,14 +228,6 @@ div[data-testid="stFileUploader"] section span,
 div[data-testid="stFileUploader"] section small { color:var(--text2) !important; }
 div[data-testid="stCheckbox"] { background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:0.65rem 0.9rem; }
 div[data-testid="stCheckbox"] label p { color:var(--text) !important; font-size:0.88rem !important; text-transform:none !important; letter-spacing:normal !important; font-weight:500 !important; }
-
-/* Primary action buttons (Predict / Run) get accent treatment via id targeting */
-.primary-action .stButton > button {
-    background:var(--accent) !important; color:#fff !important; border:none !important;
-    font-family:'Sora',sans-serif !important; font-weight:700 !important; font-size:0.95rem !important;
-    padding:0.85rem 2rem !important; box-shadow:0 6px 18px rgba(27,110,76,0.22) !important;
-}
-.primary-action .stButton > button:hover { background:#155c3f !important; color:#fff !important; }
 
 /* Back link button */
 .back-btn .stButton > button {
@@ -566,9 +561,7 @@ elif st.session_state.active_tab == 'single':
         with fl3: match_drm          = st.checkbox("🛡️ DRM",          value=True)
 
         st.markdown("<div style='height:1.4rem'></div>", unsafe_allow_html=True)
-        st.markdown('<div class="primary-action">', unsafe_allow_html=True)
-        predict_btn = st.button("Predict Priority")
-        st.markdown('</div>', unsafe_allow_html=True)
+        predict_btn = st.button("Predict Priority", type="primary")
 
         if predict_btn:
             with st.spinner("Memprediksi..."):
@@ -662,9 +655,7 @@ else:
                     <div class="stat-box"><div class="stat-num" style="color:var(--text3)">{n_skipped}</div><div class="stat-lbl">Skipped</div></div>
                 </div>""", unsafe_allow_html=True)
 
-                st.markdown('<div class="primary-action">', unsafe_allow_html=True)
-                run_bulk = st.button("Jalankan bulk predict")
-                st.markdown('</div>', unsafe_allow_html=True)
+                run_bulk = st.button("Jalankan bulk predict", type="primary")
 
                 if run_bulk and n_valid > 0:
                     results = []
